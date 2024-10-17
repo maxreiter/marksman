@@ -108,7 +108,7 @@ func Notes(notes string) RequestOption {
 	}
 }
 
-func MaintenanceType(maintenanceType AssetMaintenanceType) RequestOption {
+func MaintenanceType(maintenanceType snipeit.AssetMaintenanceType) RequestOption {
 	return func(ro *RequestOptions) {
 		ro.AssetMaintenanceType = maintenanceType
 	}
