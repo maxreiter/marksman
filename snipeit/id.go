@@ -1,9 +1,44 @@
 package snipeit
 
-import "encoding/json"
+import (
+	"strconv"
+)
 
 // ID is the base ID type of any SnipeIT model.
 type ID int32
+
+// NullID represents a null ID.
+const NullID = ^ID(0)
+
+// IsNull returns whether or not an ID is null.
+func (id ID) IsNull() bool {
+	return id == NullID
+}
+
+// UnmarshalJSON implements the [json.Unmarshaler] interface.
+func (id *ID) UnmarshalJSON(b []byte) error {
+	val := string(b)
+	if val == "null" {
+		*id = NullID
+	}
+
+	i, err := strconv.ParseInt(val, 10, 32)
+	if err != nil {
+		return err
+	}
+
+	*id = ID(i)
+	return nil
+}
+
+// MarshalJSON implements the [json.Marshaler] interface.
+func (id ID) MarshalJSON() ([]byte, error) {
+	if id.IsNull() {
+		return []byte("null"), nil
+	}
+
+	return []byte(strconv.FormatInt(int64(id), 32)), nil
+}
 
 // AccessoryID represents the ID of an [Accessory].
 type AccessoryID ID
@@ -17,51 +52,8 @@ type ConsumableID ID
 // UserID represents the ID of a [User].
 type UserID ID
 
-// NullUserID is a null [UserID].
-const NullUserID = ^UserID(-1)
-
-// UnmarshalJSON implements the [json.Unmarshaler] interface.
-func (id *UserID) UnmarshalJSON(b []byte) error {
-	if string(b) == "null" {
-		*id = NullUserID
-		return nil
-	}
-
-	return json.Unmarshal(b, &id)
-}
-
-// MarshalJSON implements the [json.Marshaler] interface.
-func (id UserID) MarshalJSON() ([]byte, error) {
-	if id == -1 {
-		return []byte("null"), nil
-	}
-
-	return json.Marshal(id)
-}
-
 // AssetID represents the ID of an [Asset].
 type AssetID ID
-
-// NullAssetID is a null asset ID.
-const NullAssetID = ^AssetID(-1)
-
-// UnmarshalJSON implements the [json.Unmarshaler] interface.
-func (id *AssetID) UnmarshalJSON(b []byte) error {
-	if string(b) == "null" {
-		*id = NullAssetID
-	}
-
-	return json.Unmarshal(b, &id)
-}
-
-// MarshalJSON implements the [json.Marshaler] interface.
-func (id AssetID) MarshalJSON() ([]byte, error) {
-	if id == -1 {
-		return []byte("null"), nil
-	}
-
-	return json.Marshal(id)
-}
 
 // CategoryID represents the ID of a [Category].
 type CategoryID ID
