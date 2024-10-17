@@ -2,31 +2,57 @@ package marksman
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
+	"strconv"
 	"strings"
 )
 
 // Error is an error returned by the SnipeIT API.
 type Error struct {
-	Message          string
-	ValidationErrors map[string][]string
+	Message          string              `json:"message"`
+	ValidationErrors map[string][]string `json:"validation_errors"`
 }
 
-// Unmarshal implements the [json.Unmarshaler] interface.
-func (e *Error) Unmarshal(data []byte) error {
+// UnmarshalJSON implements the [json.Unmarshaler] interface.
+func (e *Error) UnmarshalJSON(b []byte) error {
 	var res struct {
 		Messages any `json:"messages"`
 	}
 
-	if err := json.Unmarshal(data, &res); err != nil {
+	if err := json.Unmarshal(b, &res); err != nil {
 		return err
 	}
 
 	switch data := res.Messages.(type) {
 	case string:
 		e.Message = data
-	case map[string][]string:
-		e.ValidationErrors = data
+	case map[string]interface{}:
+		e.ValidationErrors = make(map[string][]string)
+
+		for key, val := range data {
+			iv, ok := val.([]interface{})
+			if !ok {
+				return errors.New("unknown type passed in validation errors")
+			}
+
+			e.ValidationErrors[key] = make([]string, 0)
+
+			for _, v := range iv {
+				switch kind := v.(type) {
+				case string:
+					e.ValidationErrors[key] = append(e.ValidationErrors[key], kind)
+				case int:
+					i := strconv.FormatInt(int64(kind), 10)
+					e.ValidationErrors[key] = append(e.ValidationErrors[key], i)
+				case bool:
+					b := strconv.FormatBool(kind)
+					e.ValidationErrors[key] = append(e.ValidationErrors[key], b)
+				default:
+					return errors.New("unknown type in validation errors slice")
+				}
+			}
+		}
 	}
 
 	return nil
@@ -45,12 +71,12 @@ func (e Error) Error() string {
 				sb.WriteString(key + ": ")
 
 				for _, v := range val {
-					sb.WriteString(v + "; ")
+					sb.WriteString(v + " ")
 				}
 			}
 		}
 
-		return sb.String()[:3]
+		return sb.String()[:sb.Len()-1]
 	}
 
 	return "Unhandled error"
