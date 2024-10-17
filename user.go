@@ -73,15 +73,10 @@ func (c *Client) Users(ctx context.Context, opts ...user.RequestOption) (*Users,
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
-		query:  values,
 		method: http.MethodGet,
 		url:    "/users",
+		query:  ro,
 	}
 
 	var response *Users
@@ -135,15 +130,14 @@ func (c *Client) User(ctx context.Context, id snipeit.UserID) (*snipeit.User, er
 func (c *Client) CreateUser(ctx context.Context, opts ...user.RequestOption) error {
 	ro := &user.RequestOptions{}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
+	for _, o := range opts {
+		o(ro)
 	}
 
 	req := request{
 		method: http.MethodPost,
 		url:    "/users",
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -175,23 +169,17 @@ func (c *Client) CreateUser(ctx context.Context, opts ...user.RequestOption) err
 //   - [user.StartDate]
 //   - [user.EndDate]
 func (c *Client) UpdateUser(ctx context.Context, id snipeit.UserID, opts ...user.RequestOption) error {
-	req := request{
-		method: http.MethodPatch,
-		url:    fmt.Sprintf("/users/%d", id),
-	}
-
-	reqOpts := &user.RequestOptions{}
+	ro := &user.RequestOptions{}
 
 	for _, o := range opts {
-		o(reqOpts)
+		o(ro)
 	}
 
-	bod, err := reqOpts.JSON()
-	if err != nil {
-		return err
+	req := request{
+		method: http.MethodPut,
+		url:    fmt.Sprintf("/users/%d", id),
+		body:   ro,
 	}
-
-	req.body = bod
 
 	return c.do(ctx, req, nil)
 }
@@ -231,14 +219,8 @@ func (c *Client) UserAssets(ctx context.Context, id snipeit.UserID, opts ...user
 	req := request{
 		method: http.MethodGet,
 		url:    fmt.Sprintf("/users/%d/assets", id),
+		query:  ro,
 	}
-
-	values, err := ro.Query()
-	if err != nil {
-		return nil, err
-	}
-
-	req.query = values
 
 	var response *Assets
 	if err := c.do(ctx, req, &response); err != nil {

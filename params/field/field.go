@@ -2,10 +2,6 @@
 package field
 
 import (
-	"io"
-	"net/url"
-
-	"github.com/maxreiter/marksman/params"
 	"github.com/maxreiter/marksman/snipeit"
 )
 
@@ -23,8 +19,6 @@ const (
 
 // RequestOptions contains possible options for requests made to the /fields endpoints.
 type RequestOptions struct {
-	*params.Resolver
-
 	Name           string             `json:"name,omitempty" url:"-"`
 	Element        ElementType        `json:"element,omitempty" url:"-"`
 	FieldValues    string             `json:"field_values,omitempty" url:"-"`
@@ -33,16 +27,6 @@ type RequestOptions struct {
 	FieldEncrypted bool               `json:"field_encrypted,omitempty" url:"-"`
 	HelpText       string             `json:"help_text,omitempty" url:"-"`
 	FieldsetID     snipeit.FieldsetID `json:"fieldset_id,omitempty" url:"-"`
-}
-
-// Query converts the [RequestOptions] to a [url.Values].
-func (ro *RequestOptions) Query() (url.Values, error) {
-	return ro.Resolver.Query()
-}
-
-// JSON encodes the [RequestOptions] as JSON.
-func (ro *RequestOptions) JSON() (io.Reader, error) {
-	return ro.Resolver.JSON()
 }
 
 // RequestOption is used to configure [RequestOptions].

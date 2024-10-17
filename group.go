@@ -26,15 +26,10 @@ func (c *Client) Groups(ctx context.Context, opts ...group.RequestOption) (*Grou
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodGet,
 		url:    "/groups",
-		query:  values,
+		query:  ro,
 	}
 
 	var response *Groups
@@ -72,15 +67,10 @@ func (c *Client) CreateGroup(ctx context.Context, opts ...group.RequestOption) e
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    "/groups",
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -98,15 +88,10 @@ func (c *Client) UpdateGroup(ctx context.Context, id snipeit.GroupID, opts ...gr
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPut,
 		url:    fmt.Sprintf("/groups/%d", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)

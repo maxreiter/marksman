@@ -2,17 +2,12 @@
 package report
 
 import (
-	"io"
-	"net/url"
-
 	"github.com/maxreiter/marksman/params"
 	"github.com/maxreiter/marksman/snipeit"
 )
 
 // RequestOptions contains possible options for requests made to the /reports endpoints.
 type RequestOptions struct {
-	*params.Resolver
-
 	Limit      int32              `url:"limit,omitempty" json:"-"`
 	Offset     int32              `url:"offset,omitempty" json:"-"`
 	Search     string             `url:"search,omitempty" json:"-"`
@@ -23,16 +18,6 @@ type RequestOptions struct {
 	ActionType snipeit.ActionType `url:"action_type,omitempty" json:"-"`
 	Order      params.OrderType   `url:"order,omitempty" json:"-"`
 	Sort       params.SortType    `url:"sort,omitempty" json:"-"`
-}
-
-// Query marshals the [RequestOptions] as a [url.Values].
-func (ro *RequestOptions) Query() (url.Values, error) {
-	return ro.Resolver.Query()
-}
-
-// JSON encodes the [RequestOptions] as JSON.
-func (ro *RequestOptions) JSON() (io.Reader, error) {
-	return ro.Resolver.JSON()
 }
 
 // RequestOption is used to configure a [RequestOptions].

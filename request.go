@@ -6,21 +6,32 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
-	"net/url"
+
+	"github.com/google/go-querystring/query"
 )
 
 type request struct {
 	method  string
 	url     string
-	body    io.Reader
+	body    any
 	headers http.Header
-	query   url.Values
+	query   any
 }
 
 func (c *Client) do(ctx context.Context, req request, out any) error {
 	route := c.root + base + req.url
 
-	request, err := http.NewRequestWithContext(ctx, req.method, route, req.body)
+	var body io.Reader
+	if req.body != nil {
+		var buf bytes.Buffer
+		if err := json.NewEncoder(&buf).Encode(req.body); err != nil {
+			return err
+		}
+
+		body = &buf
+	}
+
+	request, err := http.NewRequestWithContext(ctx, req.method, route, body)
 	if err != nil {
 		return err
 	}
@@ -35,7 +46,12 @@ func (c *Client) do(ctx context.Context, req request, out any) error {
 	request.Header.Set("Authorization", "Bearer "+c.token)
 
 	if req.query != nil {
-		request.URL.RawQuery = req.query.Encode()
+		values, err := query.Values(req.query)
+		if err != nil {
+			return err
+		}
+
+		request.URL.RawQuery = values.Encode()
 	}
 
 	res, err := c.client.Do(request)

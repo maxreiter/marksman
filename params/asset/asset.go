@@ -3,8 +3,6 @@ package asset
 
 import (
 	"fmt"
-	"io"
-	"net/url"
 
 	"github.com/maxreiter/marksman/params"
 	"github.com/maxreiter/marksman/snipeit"
@@ -38,7 +36,6 @@ type RequestOption func(*RequestOptions)
 
 // RequestOptions contains possible options for requests made to the /assets endpoints.
 type RequestOptions struct {
-	*params.Resolver
 
 	// Query params
 	Limit          int32                  `url:"limit,omitempty" json:"-"`
@@ -82,16 +79,6 @@ type RequestOptions struct {
 	CheckoutAt       string             `json:"checkout_at,omitempty" url:"-"`
 	Note             string             `json:"note,omitempty" url:"-"`
 	NextAuditDate    string             `json:"next_audit_date,omitempty" url:"-"`
-}
-
-// Query marshals the [RequestOptions] into a [url.Values].
-func (ro *RequestOptions) Query() (url.Values, error) {
-	return ro.Resolver.Query()
-}
-
-// JSON encodes the [RequestOptions] as JSON.
-func (ro *RequestOptions) JSON() (io.Reader, error) {
-	return ro.Resolver.JSON()
 }
 
 // Limit sets the return limit on a request.

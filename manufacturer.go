@@ -30,15 +30,10 @@ func (c *Client) Manufacturers(ctx context.Context, opts ...manufacturer.Request
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodGet,
 		url:    "/manufacturers",
-		query:  values,
+		query:  ro,
 	}
 
 	var response *Manufacturers
@@ -60,15 +55,10 @@ func (c *Client) CreateManufacturer(ctx context.Context, id snipeit.Manufacturer
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    fmt.Sprintf("/manufacturers/%d", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -100,15 +90,10 @@ func (c *Client) UpdateManufacturer(ctx context.Context, id snipeit.Manufacturer
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPut,
 		url:    fmt.Sprintf("/manufacturers/%d", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)

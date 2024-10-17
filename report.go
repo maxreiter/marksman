@@ -34,15 +34,10 @@ func (c *Client) ReportActivities(ctx context.Context, opts ...report.RequestOpt
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodGet,
 		url:    "/reports/activity",
-		query:  values,
+		query:  ro,
 	}
 
 	var response *ReportActivities

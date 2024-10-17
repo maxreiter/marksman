@@ -1,17 +1,8 @@
 // Package supplier provides request configuration for methods of the marksman client.
 package supplier
 
-import (
-	"io"
-	"net/url"
-
-	"github.com/maxreiter/marksman/params"
-)
-
 // RequestOptions contains possible options for requests made to the /suppliers endpoints.
 type RequestOptions struct {
-	*params.Resolver
-
 	Name     string `url:"name,omitempty" json:"-"`
 	Address  string `url:"address,omitempty" json:"-"`
 	Address2 string `url:"address2,omitempty" json:"-"`
@@ -22,16 +13,6 @@ type RequestOptions struct {
 	Email    string `url:"email,omitempty" json:"-"`
 	URL      string `url:"url,omitempty" json:"-"`
 	Notes    string `url:"notes,omitempty" json:"-"`
-}
-
-// Query marshals the [RequestOptions] as a [url.Values].
-func (ro *RequestOptions) Query() (url.Values, error) {
-	return ro.Resolver.Query()
-}
-
-// JSON encodes the [RequestOptions] as JSON.
-func (ro *RequestOptions) JSON() (io.Reader, error) {
-	return ro.Resolver.JSON()
 }
 
 // RequestOption is used to configure a [RequestOptions].

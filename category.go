@@ -37,15 +37,10 @@ func (c *Client) Categories(ctx context.Context, opts ...category.RequestOption)
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodGet,
 		url:    "/categories",
-		query:  values,
+		query:  ro,
 	}
 
 	var response *Categories
@@ -71,15 +66,10 @@ func (c *Client) CreateCategory(ctx context.Context, opts ...category.RequestOpt
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    "/categories",
-		body:   bod,
+		body:   ro,
 	}
 
 	var response *snipeit.Category
@@ -120,15 +110,10 @@ func (c *Client) UpdateCategory(ctx context.Context, id snipeit.CategoryID, opts
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodPut,
 		url:    fmt.Sprintf("/categories/%d", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	var response *snipeit.Category

@@ -2,16 +2,12 @@
 package consumable
 
 import (
-	"io"
-	"net/url"
-
 	"github.com/maxreiter/marksman/params"
 	"github.com/maxreiter/marksman/snipeit"
 )
 
 // RequestOptions contains possible options for requests made to the /consumables endpoints.
 type RequestOptions struct {
-	*params.Resolver
 
 	// Query params
 	Limit     int32             `url:"limit,omitempty" json:"-"`
@@ -37,16 +33,6 @@ type RequestOptions struct {
 	ModelNumber  string             `json:"model_number,omitempty" url:"-"`
 	ItemNo       string             `json:"item_no,omitempty" url:"-"`
 	AssignedTo   snipeit.UserID     `json:"assigned_to,omitempty" url:"-"`
-}
-
-// Query marshals the [RequestOptions] as a [url.Values].
-func (ro *RequestOptions) Query() (url.Values, error) {
-	return ro.Resolver.Query()
-}
-
-// JSON encodes the [RequestOptions] as JSON.
-func (ro *RequestOptions) JSON() (io.Reader, error) {
-	return ro.Resolver.JSON()
 }
 
 // RequestOption is used to configure a [RequestOptions].

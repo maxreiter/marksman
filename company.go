@@ -26,15 +26,10 @@ func (c *Client) Companies(ctx context.Context, opts ...company.RequestOption) (
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodGet,
 		url:    "/companies",
-		query:  values,
+		query:  ro,
 	}
 
 	var response *Companies
@@ -56,15 +51,10 @@ func (c *Client) CreateCompany(ctx context.Context, opts ...company.RequestOptio
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    "/companies",
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -93,15 +83,10 @@ func (c Client) UpdateCompany(ctx context.Context, id snipeit.CompanyID, opts ..
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodPut,
 		url:    fmt.Sprintf("/companies/%d", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	var response *snipeit.Company

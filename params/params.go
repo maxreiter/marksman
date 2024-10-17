@@ -1,15 +1,6 @@
 // Package params provides universal parameters for use in subpackages.
 package params
 
-import (
-	"bytes"
-	"encoding/json"
-	"io"
-	"net/url"
-
-	"github.com/google/go-querystring/query"
-)
-
 // SortType represents the different columns one may sort by in a request.
 type SortType string
 
@@ -45,22 +36,3 @@ const (
 	OrderAsc  OrderType = "asc"
 	OrderDesc OrderType = "desc"
 )
-
-// Resolver is used to resolve request options into different types.
-// Such as JSON encoded bodies or URL encoded query parameters.
-type Resolver struct{}
-
-// Query marshals the [Resolver] into a [url.Values].
-func (r *Resolver) Query() (url.Values, error) {
-	return query.Values(r)
-}
-
-// JSON encodes the [Resolver] as JSON.
-func (r *Resolver) JSON() (io.Reader, error) {
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(r); err != nil {
-		return nil, err
-	}
-
-	return &buf, nil
-}

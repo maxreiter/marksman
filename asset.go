@@ -43,15 +43,10 @@ func (c *Client) Assets(ctx context.Context, opts ...asset.RequestOption) (*Asse
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodGet,
 		url:    "/hardware",
-		query:  values,
+		query:  ro,
 	}
 
 	var response *Assets
@@ -91,15 +86,10 @@ func (c *Client) CreateAsset(ctx context.Context, opts ...asset.RequestOption) e
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    "/hardware",
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -131,15 +121,10 @@ func (c *Client) AssetByTag(ctx context.Context, tag string, opts ...asset.Reque
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodGet,
 		url:    fmt.Sprintf("/hardware/bytag/%s", tag),
-		query:  values,
+		query:  ro,
 	}
 
 	var response *snipeit.Asset
@@ -160,15 +145,10 @@ func (c *Client) AssetBySerial(ctx context.Context, serial string, opts ...asset
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodGet,
 		url:    fmt.Sprintf("/hardware/byserial/%s", serial),
-		query:  values,
+		query:  ro,
 	}
 
 	var response *snipeit.Asset
@@ -210,15 +190,10 @@ func (c *Client) UpdateAsset(ctx context.Context, id snipeit.AssetID, opts ...as
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPut,
 		url:    fmt.Sprintf("/hardware/%d", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -253,15 +228,10 @@ func (c *Client) CheckoutAsset(ctx context.Context, id snipeit.AssetID, opts ...
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    fmt.Sprintf("/hardware/%d/checkout", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	var response *Assets
@@ -286,15 +256,10 @@ func (c *Client) CheckinAsset(ctx context.Context, id snipeit.AssetID, opts ...a
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    fmt.Sprintf("/hardware/%d/checkout", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	var response *Assets
@@ -318,15 +283,10 @@ func (c *Client) AuditAsset(ctx context.Context, opts ...asset.RequestOption) er
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    "/hardware/audit",
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)

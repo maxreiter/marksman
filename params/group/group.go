@@ -1,32 +1,14 @@
 // Package group provides request configuration for methods of the marksman client.
 package group
 
-import (
-	"io"
-	"net/url"
-
-	"github.com/maxreiter/marksman/params"
-)
-
 // RequestOptions contains possible options for requests made to the /groups endpoints.
 type RequestOptions struct {
-	*params.Resolver
 
 	// Compound params
 	Name string `url:"name,omitempty" json:"name,omitempty"`
 
 	// Body params
 	Permissions string `json:"permissions,omitempty"`
-}
-
-// Query marshals the [RequestOptions] as a [url.Values].
-func (ro *RequestOptions) Query() (url.Values, error) {
-	return ro.Resolver.Query()
-}
-
-// JSON encodes the [RequestOptions] as JSON.
-func (ro *RequestOptions) JSON() (io.Reader, error) {
-	return ro.Resolver.JSON()
 }
 
 // RequestOption is used to configure a [RequestOptions].

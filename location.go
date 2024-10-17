@@ -35,15 +35,10 @@ func (c *Client) Locations(ctx context.Context, opts ...location.RequestOption) 
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodGet,
 		url:    "/locations",
-		query:  values,
+		query:  ro,
 	}
 
 	var response *Locations
@@ -75,15 +70,10 @@ func (c *Client) CreateLocation(ctx context.Context, id snipeit.LocationID, opts
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return nil
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    fmt.Sprintf("/locations/%d", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -125,15 +115,10 @@ func (c *Client) UpdateLocation(ctx context.Context, id snipeit.LocationID, opts
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPut,
 		url:    fmt.Sprintf("/locations/%d", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)

@@ -47,15 +47,10 @@ func (c *Client) CreateField(ctx context.Context, opts ...field.RequestOption) e
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    "/fields",
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -88,15 +83,10 @@ func (c *Client) UpdateField(ctx context.Context, id snipeit.FieldID, opts ...fi
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPut,
 		url:    fmt.Sprintf("/fields/%d", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -123,15 +113,10 @@ func (c *Client) AssociateField(ctx context.Context, id snipeit.FieldID, opts ..
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    fmt.Sprintf("/fields/%d/associate", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -148,15 +133,10 @@ func (c *Client) DisassociateField(ctx context.Context, id snipeit.FieldID, opts
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    fmt.Sprintf("/fields/%d/disassociate", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)

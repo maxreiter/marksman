@@ -2,9 +2,6 @@
 package category
 
 import (
-	"io"
-	"net/url"
-
 	"github.com/maxreiter/marksman/params"
 	"github.com/maxreiter/marksman/snipeit"
 )
@@ -23,7 +20,6 @@ const (
 
 // RequestOptions contains possible options for requests made to the /categories endpoints.
 type RequestOptions struct {
-	*params.Resolver
 
 	// Query params
 	Limit      int32              `url:"limit,omitempty" json:"-"`
@@ -39,16 +35,6 @@ type RequestOptions struct {
 	UseDefaultEULA    bool         `url:"use_default_eula,omitempty" json:"use_default_eula,omitempty"`
 	RequireAcceptance bool         `url:"require_acceptance,omitempty" json:"require_acceptance,omitempty"`
 	CheckinEmail      bool         `url:"checkin_email,omitempty" json:"checkin_email,omitempty"`
-}
-
-// Query marshals the [RequestOptions] into a [url.Values].
-func (ro *RequestOptions) Query() (url.Values, error) {
-	return ro.Resolver.Query()
-}
-
-// JSON encodes a [RequestOptions] as JSON.
-func (ro *RequestOptions) JSON() (io.Reader, error) {
-	return ro.Resolver.JSON()
 }
 
 // RequestOption is used to configure a [RequestOptions]

@@ -2,16 +2,12 @@
 package maintenance
 
 import (
-	"io"
-	"net/url"
-
 	"github.com/maxreiter/marksman/params"
 	"github.com/maxreiter/marksman/snipeit"
 )
 
 // RequestOptions contains possible options for requests made to the /maintenances endpoints.
 type RequestOptions struct {
-	*params.Resolver
 
 	// Query params
 	Limit  int32            `url:"limit,omitempty" json:"-"`
@@ -32,16 +28,6 @@ type RequestOptions struct {
 	AssetMaintenanceType snipeit.AssetMaintenanceType `json:"asset_maintenance_type,omitempty" url:"-"`
 	StartDate            string                       `json:"start_date,omitempty" url:"-"`
 	CompletionDate       string                       `json:"completion_date,omitempty" url:"-"`
-}
-
-// Query marshals the [RequestOptions] as a [url.Query].
-func (ro *RequestOptions) Query() (url.Values, error) {
-	return ro.Resolver.Query()
-}
-
-// JSON encodes the [RequestOptions] as JSON.
-func (ro *RequestOptions) JSON() (io.Reader, error) {
-	return ro.Resolver.JSON()
 }
 
 // RequestOption is used to configure a [RequestOptions].

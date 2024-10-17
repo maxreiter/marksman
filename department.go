@@ -29,15 +29,10 @@ func (c *Client) Departments(ctx context.Context, opts ...department.RequestOpti
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodGet,
 		url:    "/departments",
-		query:  values,
+		query:  ro,
 	}
 
 	var response *Departments
@@ -59,15 +54,10 @@ func (c *Client) CreateDepartment(ctx context.Context, opts ...department.Reques
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    "/departments",
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -99,15 +89,10 @@ func (c *Client) UpdateDepartment(ctx context.Context, id snipeit.DepartmentID, 
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPut,
 		url:    fmt.Sprintf("/departments/%d", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)

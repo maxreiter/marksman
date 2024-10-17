@@ -30,15 +30,10 @@ func (c *Client) Models(ctx context.Context, opts ...model.RequestOption) (*Mode
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodGet,
 		url:    "/models",
-		query:  values,
+		query:  ro,
 	}
 
 	var response *Models
@@ -65,15 +60,10 @@ func (c *Client) CreateModel(ctx context.Context, opts ...model.RequestOption) e
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    "/models",
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -86,15 +76,10 @@ func (c *Client) Model(ctx context.Context, id snipeit.ModelID, opts ...model.Re
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodGet,
 		url:    fmt.Sprintf("/models/%d", id),
-		query:  values,
+		query:  ro,
 	}
 
 	var response *snipeit.Model
@@ -112,15 +97,10 @@ func (c *Client) UpdateModel(ctx context.Context, id snipeit.ModelID, opts ...mo
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPut,
 		url:    fmt.Sprintf("/models/%d", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)

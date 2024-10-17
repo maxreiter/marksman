@@ -31,15 +31,10 @@ func (c *Client) Maintenances(ctx context.Context, opts ...maintenance.RequestOp
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodGet,
 		url:    "/maintenances",
-		query:  values,
+		query:  ro,
 	}
 
 	var response *Maintenances
@@ -69,15 +64,10 @@ func (c *Client) CreateMaintenance(ctx context.Context, opts ...maintenance.Requ
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    "/maintenances",
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -102,15 +92,10 @@ func (c *Client) UpdateMaintenance(ctx context.Context, id snipeit.MaintenanceID
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPut,
 		url:    fmt.Sprintf("/maintenances/%d", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)

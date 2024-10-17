@@ -33,15 +33,10 @@ func (c *Client) Components(ctx context.Context, opts ...component.RequestOption
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodGet,
 		url:    "/components",
-		query:  values,
+		query:  ro,
 	}
 
 	var response *Components
@@ -72,15 +67,10 @@ func (c *Client) CreateComponent(ctx context.Context, opts ...component.RequestO
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    "/components",
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -121,15 +111,10 @@ func (c *Client) UpdateComponent(ctx context.Context, id snipeit.ComponentID, op
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPut,
 		url:    fmt.Sprintf("/components/%d", id),
-		query:  values,
+		query:  ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -172,15 +157,10 @@ func (c *Client) CheckoutComponent(ctx context.Context, id snipeit.ComponentID, 
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    fmt.Sprintf("/components/%d/checkout", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -197,15 +177,10 @@ func (c *Client) CheckinComponent(ctx context.Context, id snipeit.ComponentID, o
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    fmt.Sprintf("/components/%d/checkin", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)

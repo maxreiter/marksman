@@ -32,15 +32,10 @@ func (c *Client) StatusLabels(ctx context.Context, opts ...statuslabel.RequestOp
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodGet,
 		url:    "/stauslabels",
-		query:  values,
+		query:  ro,
 	}
 
 	var response *StatusLabels
@@ -67,15 +62,10 @@ func (c *Client) CreateStatusLabel(ctx context.Context, opts ...statuslabel.Requ
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    "/statuslabels",
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -112,15 +102,10 @@ func (c *Client) UpdateStatusLabel(ctx context.Context, id snipeit.StatusLabelID
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPut,
 		url:    fmt.Sprintf("/statuslabels/%d", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)

@@ -3,8 +3,6 @@ package user
 
 import (
 	"encoding/json"
-	"io"
-	"net/url"
 
 	"github.com/maxreiter/marksman/params"
 	"github.com/maxreiter/marksman/snipeit"
@@ -28,7 +26,6 @@ func (g UserGroups) MarshalJSON() ([]byte, error) {
 
 // RequestOptions contains possible options for requests made to the /users endpoints.
 type RequestOptions struct {
-	*params.Resolver
 
 	// Query params
 	Search           string             `url:"search,omitempty" json:"-"`
@@ -76,16 +73,6 @@ type RequestOptions struct {
 	TwoFactorOptin       bool           `json:"two_factor_optin,omitempty" url:"-"`
 	Groups               UserGroups     `json:"groups,omitempty" url:"-"`
 	VIP                  bool           `json:"vip,omitempty" url:"-"`
-}
-
-// Query marshals the [RequestOptions] as a [url.Values].
-func (ro *RequestOptions) Query() (url.Values, error) {
-	return ro.Resolver.Query()
-}
-
-// JSON encodes the [RequestOptions] as JSON.
-func (ro *RequestOptions) JSON() (io.Reader, error) {
-	return ro.Resolver.JSON()
 }
 
 // RequestOption is used to configure a [RequestOptions].

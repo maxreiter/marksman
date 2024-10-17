@@ -2,9 +2,6 @@
 package statuslabel
 
 import (
-	"io"
-	"net/url"
-
 	"github.com/maxreiter/marksman/params"
 )
 
@@ -21,7 +18,6 @@ const (
 
 // RequestOptions contains possible options for requests made to the /statuslabels endpoints.
 type RequestOptions struct {
-	*params.Resolver
 
 	// Query params
 	Limit  int32            `url:"limit,omitempty" json:"-"`
@@ -39,16 +35,6 @@ type RequestOptions struct {
 	Color        string `json:"color,omitempty" url:"-"`
 	ShowInNav    bool   `json:"show_in_nav,omitempty" url:"-"`
 	DefaultLabel bool   `json:"default_label,omitempty" url:"-"`
-}
-
-// Query marshals the [RequestOptions] as a [url.Values].
-func (ro *RequestOptions) Query() (url.Values, error) {
-	return ro.Resolver.Query()
-}
-
-// JSON encodes the [RequestOptions] as JSON.
-func (ro *RequestOptions) JSON() (io.Reader, error) {
-	return ro.Resolver.JSON()
 }
 
 // RequestOption is used to configure a [RequestOptions].

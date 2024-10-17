@@ -32,15 +32,10 @@ func (c *Client) Accessories(ctx context.Context, opts ...accessory.RequestOptio
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodGet,
 		url:    "/accessories",
-		query:  values,
+		query:  ro,
 	}
 
 	var response *Accessories
@@ -72,15 +67,10 @@ func (c *Client) CreateAccessory(ctx context.Context, opts ...accessory.RequestO
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    "/accessories",
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -122,15 +112,10 @@ func (c *Client) UpdateAccessory(ctx context.Context, id snipeit.AccessoryID, op
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPut,
 		url:    fmt.Sprintf("/accessories/%d", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -158,15 +143,10 @@ func (c *Client) AccessoryCheckouts(ctx context.Context, id snipeit.AccessoryID,
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodGet,
 		url:    fmt.Sprintf("/accessories/%d/checkedout", id),
-		query:  values,
+		query:  ro,
 	}
 
 	var response *Accessories
@@ -194,21 +174,11 @@ func (c *Client) CheckoutAccessory(ctx context.Context, id snipeit.AccessoryID, 
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return err
-	}
-
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    fmt.Sprintf("/accessories/%d/checkout", id),
-		body:   bod,
-		query:  values,
+		body:   ro,
+		query:  ro,
 	}
 
 	return c.do(ctx, req, nil)

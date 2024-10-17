@@ -43,15 +43,10 @@ func (c *Client) Licenses(ctx context.Context, opts ...license.RequestOption) (*
 		o(ro)
 	}
 
-	values, err := ro.Query()
-	if err != nil {
-		return nil, err
-	}
-
 	req := request{
 		method: http.MethodGet,
 		url:    "/licenses",
-		query:  values,
+		query:  ro,
 	}
 
 	var response *Licenses
@@ -90,15 +85,10 @@ func (c *Client) CreateLicense(ctx context.Context, opts ...license.RequestOptio
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return nil
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    "/licenses",
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -147,15 +137,10 @@ func (c *Client) UpdateLicense(ctx context.Context, id snipeit.LicenseID, opts .
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPut,
 		url:    fmt.Sprintf("/licenses/%d", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -220,15 +205,10 @@ func (c *Client) UpdateLicenseSeat(ctx context.Context, licenseID snipeit.Licens
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPut,
 		url:    fmt.Sprintf("/licenses/%d/seats/%d", licenseID, seatID),
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)

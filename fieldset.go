@@ -41,15 +41,10 @@ func (c *Client) CreateFieldset(ctx context.Context, opts ...fieldset.RequestOpt
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPost,
 		url:    "/fieldsets",
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
@@ -81,15 +76,10 @@ func (c *Client) UpdateFieldset(ctx context.Context, id snipeit.FieldsetID, opts
 		o(ro)
 	}
 
-	bod, err := ro.JSON()
-	if err != nil {
-		return err
-	}
-
 	req := request{
 		method: http.MethodPut,
 		url:    fmt.Sprintf("/fieldsets/%d", id),
-		body:   bod,
+		body:   ro,
 	}
 
 	return c.do(ctx, req, nil)
