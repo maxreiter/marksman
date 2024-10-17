@@ -1,4 +1,4 @@
-// Package report provides request configuration for methods of the [marksman.Client].
+// Package report provides request configuration for methods of the marksman client.
 package report
 
 import (

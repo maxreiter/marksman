@@ -1,4 +1,4 @@
-// Package asset provides request configuration for methods of the [marksman.Client].
+// Package asset provides request configuration for methods of the marksman client.
 package asset
 
 import (

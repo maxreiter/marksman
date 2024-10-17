@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// Error is an error returned by the API.
+// Error is an error returned by the SnipeIT API.
 type Error struct {
 	Message          string
 	ValidationErrors map[string][]string

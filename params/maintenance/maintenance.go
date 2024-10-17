@@ -1,4 +1,4 @@
-// Package maintenance provides request configuration for methods of the [marksman.Client].
+// Package maintenance provides request configuration for methods of the marksman client.
 package maintenance
 
 import (

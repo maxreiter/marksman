@@ -1,4 +1,4 @@
-// Package user provides request configuration for methods of the [marksman.Client].
+// Package user provides request configuration for methods of the marksman client.
 package user
 
 import (

@@ -1,4 +1,4 @@
-// Package department provides request configuration for methods of the [marksman.Client].
+// Package department provides request configuration for methods of the marksman client.
 package department
 
 import (

@@ -1,4 +1,4 @@
-// Package marksman implements a fully capable API client for the SnipeIT API.
+// Package marksman implements a fully capable client for the SnipeIT API.
 package marksman
 
 import (

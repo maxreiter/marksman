@@ -1,4 +1,4 @@
-// Package category provides request configuration for methods of the [marksman.Client].
+// Package category provides request configuration for methods of the marksman client.
 package category
 
 import (

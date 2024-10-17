@@ -1,4 +1,4 @@
-// Package accessory provides request configuration for methods of the [marksman.Client].
+// Package accessory provides request configuration for methods of the marksman client.
 package accessory
 
 import (

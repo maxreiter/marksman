@@ -1,4 +1,4 @@
-// Package consumable provides request configuration for methods of the [marksman.Client].
+// Package consumable provides request configuration for methods of the marksman client.
 package consumable
 
 import (

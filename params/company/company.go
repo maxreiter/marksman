@@ -1,4 +1,4 @@
-// Package company provides request configuration for methods of the [marksman.Client].
+// Package company provides request configuration for methods of the marksman client.
 package company
 
 import (

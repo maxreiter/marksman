@@ -1,4 +1,4 @@
-// Package location provides request configuration for methods of the [marksman.Client].
+// Package location provides request configuration for methods of the marksman client.
 package location
 
 import (

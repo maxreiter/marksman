@@ -1,4 +1,4 @@
-// Package component provides request configuration for methods of the [marksman.Client].
+// Package component provides request configuration for methods of the marksman client.
 package component
 
 import (

@@ -1,4 +1,4 @@
-// Package manufacturer provides request configuration for methods of the [marksman.Client].
+// Package manufacturer provides request configuration for methods of the marksman client.
 package manufacturer
 
 import (

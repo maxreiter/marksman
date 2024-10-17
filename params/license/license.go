@@ -1,4 +1,4 @@
-// Package license provides request configuration for methods of the [marksman.Client].
+// Package license provides request configuration for methods of the marksman client.
 package license
 
 import (

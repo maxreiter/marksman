@@ -1,4 +1,4 @@
-// Package group provides request configuration for methods of the [marksman.Client].
+// Package group provides request configuration for methods of the marksman client.
 package group
 
 import (

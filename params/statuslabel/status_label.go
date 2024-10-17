@@ -1,4 +1,4 @@
-// Package statuslabel provides request configuration for methods of the [marksman.Client].
+// Package statuslabel provides request configuration for methods of the marksman client.
 package statuslabel
 
 import (

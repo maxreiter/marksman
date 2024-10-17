@@ -1,4 +1,4 @@
-// Package supplier provides request configuration for methods of the [marksman.Client].
+// Package supplier provides request configuration for methods of the marksman client.
 package supplier
 
 import (

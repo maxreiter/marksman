@@ -1,4 +1,4 @@
-// Package fieldset provides request configuration for methods of the [marksman.Client].
+// Package fieldset provides request configuration for methods of the marksman client.
 package fieldset
 
 import (
