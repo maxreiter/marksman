@@ -77,6 +77,8 @@ type ManufacturerID ID
 
 type ModelID ID
 
+type MaintenanceID ID
+
 type StatusLabelID ID
 
 type SupplierID ID

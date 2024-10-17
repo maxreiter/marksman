@@ -8,17 +8,6 @@ import (
 	"github.com/maxreiter/marksman/snipeit"
 )
 
-type AssetMaintenanceType string
-
-const (
-	MaintenanceGeneral         AssetMaintenanceType = "Maintenance"
-	MaintenanceRepair          AssetMaintenanceType = "Repair"
-	MaintenancePATTest         AssetMaintenanceType = "PAT test"
-	MaintenanceUpgrade         AssetMaintenanceType = "Upgrade"
-	MaintenanceHardwareSupport AssetMaintenanceType = "Hardware Support"
-	MaintenanceSoftwareSupport AssetMaintenanceType = "Software Support"
-)
-
 type RequestOptions struct {
 	*params.BaseResolver
 
@@ -33,14 +22,14 @@ type RequestOptions struct {
 	AssetID snipeit.AssetID `url:"asset_id,omitempty" json:"asset_id,omitempty"`
 
 	// Body params
-	Title                string               `json:"title,omitempty" url:"-"`
-	SupplierID           int32                `json:"supplier_id,omitempty" url:"-"`
-	IsWarranty           bool                 `json:"is_warranty,omitempty" url:"-"`
-	Cost                 float64              `json:"cost,omitempty" url:"-"`
-	Notes                string               `json:"notes,omitempty" url:"-"`
-	AssetMaintenanceType AssetMaintenanceType `json:"asset_maintenance_type,omitempty" url:"-"`
-	StartDate            string               `json:"start_date,omitempty" url:"-"`
-	CompletionDate       string               `json:"completion_date,omitempty" url:"-"`
+	Title                string                       `json:"title,omitempty" url:"-"`
+	SupplierID           int32                        `json:"supplier_id,omitempty" url:"-"`
+	IsWarranty           bool                         `json:"is_warranty,omitempty" url:"-"`
+	Cost                 float64                      `json:"cost,omitempty" url:"-"`
+	Notes                string                       `json:"notes,omitempty" url:"-"`
+	AssetMaintenanceType snipeit.AssetMaintenanceType `json:"asset_maintenance_type,omitempty" url:"-"`
+	StartDate            string                       `json:"start_date,omitempty" url:"-"`
+	CompletionDate       string                       `json:"completion_date,omitempty" url:"-"`
 }
 
 func (ro *RequestOptions) Values() (url.Values, error) {
