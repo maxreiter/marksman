@@ -30,5 +30,18 @@ func TestMarksman(t *testing.T) {
 		assert.NilError(t, err, "fetching /users/me")
 
 		t.Logf("User: ID: %d: Name: %s", me.ID, me.Name)
+
+		users, err := client.Users(ctx)
+		assert.NilError(t, err, "fetching /users")
+
+		t.Logf("Total users: %d", users.Total)
+		for _, user := range users.Rows {
+			t.Logf("User: ID: %d: Name: %s", user.ID, user.Name)
+		}
+
+		user, err := client.User(ctx, me.ID)
+		assert.NilError(t, err, "fetching /users/%d", me.ID)
+
+		t.Logf("User: ID: %d: Name: %s", user.ID, user.Name)
 	})
 }
