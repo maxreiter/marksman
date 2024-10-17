@@ -6,6 +6,8 @@ type ID int32
 
 type AccessoryID ID
 
+type ActionLogID ID
+
 type ConsumerID ID
 
 type ConsumableID ID

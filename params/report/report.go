@@ -8,28 +8,19 @@ import (
 	"github.com/maxreiter/marksman/snipeit"
 )
 
-type RequestActionType string
-
-const (
-	ActionAddSeats    RequestActionType = "add seats"
-	ActionCheckinFrom RequestActionType = "checkin from"
-	ActionCheckout    RequestActionType = "checkout"
-	ActionUpdate      RequestActionType = "update"
-)
-
 type RequestOptions struct {
 	*params.BaseResolver
 
-	Limit      int32             `url:"limit,omitempty" json:"-"`
-	Offset     int32             `url:"offset,omitempty" json:"-"`
-	Search     string            `url:"search,omitempty" json:"-"`
-	TargetType string            `url:"target_type,omitempty" json:"-"`
-	TargetID   snipeit.ID        `url:"target_id,omitempty" json:"-"`
-	ItemType   string            `url:"item_type,omitempty" json:"-"`
-	ItemID     snipeit.ID        `url:"item_id,omitempty" json:"-"`
-	ActionType RequestActionType `url:"action_type,omitempty" json:"-"`
-	Order      params.OrderType  `url:"order,omitempty" json:"-"`
-	Sort       params.SortType   `url:"sort,omitempty" json:"-"`
+	Limit      int32              `url:"limit,omitempty" json:"-"`
+	Offset     int32              `url:"offset,omitempty" json:"-"`
+	Search     string             `url:"search,omitempty" json:"-"`
+	TargetType string             `url:"target_type,omitempty" json:"-"`
+	TargetID   snipeit.ID         `url:"target_id,omitempty" json:"-"`
+	ItemType   string             `url:"item_type,omitempty" json:"-"`
+	ItemID     snipeit.ID         `url:"item_id,omitempty" json:"-"`
+	ActionType snipeit.ActionType `url:"action_type,omitempty" json:"-"`
+	Order      params.OrderType   `url:"order,omitempty" json:"-"`
+	Sort       params.SortType    `url:"sort,omitempty" json:"-"`
 }
 
 func (ro *RequestOptions) Values() (url.Values, error) {
@@ -84,7 +75,7 @@ func ItemID(id snipeit.ID) RequestOption {
 	}
 }
 
-func ActionType(actionType RequestActionType) RequestOption {
+func ActionType(actionType snipeit.ActionType) RequestOption {
 	return func(ro *RequestOptions) {
 		ro.ActionType = actionType
 	}
