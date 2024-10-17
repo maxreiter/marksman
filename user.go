@@ -107,6 +107,48 @@ func (c *Client) User(ctx context.Context, id snipeit.UserID) (*snipeit.User, er
 	return response, nil
 }
 
+// CreateUser creates a new [snipeit.User].
+//
+// The following body parameters are accepted:
+//   - [user.FirstName]: required
+//   - [user.Username]: required
+//   - [user.Password]: required
+//   - [user.LastName]
+//   - [user.Email]
+//   - [user.Permissions]
+//   - [user.Activated]
+//   - [user.Phone]
+//   - [user.JobTitle]
+//   - [user.ManagerID]
+//   - [user.EmployeeNum]
+//   - [user.Notes]
+//   - [user.CompanyID]
+//   - [user.TwoFactorEnrolled]
+//   - [user.TwoFactorOptin]
+//   - [user.DepartmentID]
+//   - [user.LocationID]
+//   - [user.Remote]
+//   - [user.Groups]: defaults to null
+//   - [user.VIP]: defaults to false
+//   - [user.StartDate]
+//   - [user.EndDate]
+func (c *Client) CreateUser(ctx context.Context, opts ...user.RequestOption) error {
+	ro := &user.RequestOptions{}
+
+	bod, err := ro.JSON()
+	if err != nil {
+		return err
+	}
+
+	req := request{
+		method: http.MethodPost,
+		url:    "/users",
+		body:   bod,
+	}
+
+	return c.do(ctx, req, nil)
+}
+
 // UpdateUser updates a [snipeit.User].
 //
 // The following body parameters are accepted:
