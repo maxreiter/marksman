@@ -29,7 +29,7 @@ func (c *Client) do(ctx context.Context, req request, out any) error {
 		request.Header = req.headers.Clone()
 	}
 
-	request.Header.Set("User-Agent", userAgent)
+	request.Header.Set("User-Agent", defaultUserAgent)
 	request.Header.Set("Accept", headerAccept)
 	request.Header.Set("Content-Type", headerContentType)
 	request.Header.Set("Authorization", "Bearer "+c.token)

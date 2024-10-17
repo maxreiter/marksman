@@ -19,7 +19,7 @@ const (
 )
 
 var (
-	userAgent = fmt.Sprintf("Snipe/v%s", Version)
+	defaultUserAgent = fmt.Sprintf("marksman/v%s", Version)
 
 	defaultClient = &http.Client{
 		Timeout: time.Second * 10,
@@ -29,8 +29,9 @@ var (
 // Client is an HTTP client responsible for interfacing with the SnipeIT API.
 // It provides methods for every possible route found within the API.
 type Client struct {
-	root  string
-	token string
+	root      string
+	token     string
+	userAgent string
 
 	client *http.Client
 }
@@ -54,6 +55,10 @@ func New(opts ...Option) (*Client, error) {
 
 	if c.client == nil {
 		c.client = defaultClient
+	}
+
+	if c.userAgent == "" {
+		c.userAgent = defaultUserAgent
 	}
 
 	return c, nil
