@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 
@@ -68,26 +69,39 @@ func (c *Client) do(ctx context.Context, req request, out any) error {
 	}
 
 	if out == nil {
-		var ae *Error
-		if err := json.NewDecoder(res.Body).Decode(&ae); err != nil {
-			return err
-		}
-
-		if ae != nil {
-			return ae
-		}
-	} else {
 		var buf bytes.Buffer
 		tee := io.TeeReader(res.Body, &buf)
 
-		if err := json.NewDecoder(tee).Decode(&out); err != nil {
-			var ae *Error
-			if err := json.NewDecoder(&buf).Decode(&ae); err != nil {
-				return err
-			}
+		body, _ := io.ReadAll(tee)
 
-			return ae
+		fmt.Println(string(body))
+
+		var response Response
+		if err := json.NewDecoder(&buf).Decode(&response); err != nil {
+			return err
 		}
+
+		if response.Status == ResponseError {
+			return Error{response}
+		}
+
+		return nil
+	}
+
+	var buf bytes.Buffer
+	copy := io.TeeReader(res.Body, &buf)
+
+	var response Response
+	if err := json.NewDecoder(copy).Decode(&response); err != nil {
+		return err
+	}
+
+	if response.Status == ResponseError {
+		return Error{response}
+	}
+
+	if err := json.NewDecoder(&buf).Decode(out); err != nil {
+		return err
 	}
 
 	return nil

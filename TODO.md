@@ -12,8 +12,8 @@
 - [x] Single
 - [x] Create
 - [x] Update
-- [ ] Delete
-- [ ] Restore
+- [x] Delete
+- [x] Restore
 - [ ] Assets
 - [ ] Licenses
 - [ ] Accessories

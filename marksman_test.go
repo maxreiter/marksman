@@ -50,7 +50,7 @@ func TestMarksman(t *testing.T) {
 			ctx,
 			user.FirstName("Dummy"),
 			user.Username("dummy"),
-			user.Password("insecure"),
+			user.Password("insecure1234"),
 		)
 		assert.NilError(t, err, "creating new user")
 
@@ -82,8 +82,11 @@ func TestMarksman(t *testing.T) {
 		err = client.DeleteUser(ctx, dummy.ID)
 		assert.NilError(t, err, "deleting dummy")
 
-		dummy, err = client.User(ctx, dummy.ID)
-		t.Log(err)
+		_, err = client.User(ctx, dummy.ID)
+		assert.ErrorContains(t, err, "user does not exist", "dummy exists")
+
+		err = client.RestoreUser(ctx, dummy.ID)
+		assert.NilError(t, err, "restoring dummy")
 
 	})
 }
