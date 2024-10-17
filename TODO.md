@@ -1,0 +1,5 @@
+- [ ] Handle "status" responses
+- [ ] Ensure we're sending the correct data in date parameters
+- [ ] Document types & packages
+- [ ] Make sure we're using the correct type for IDs everywhere
+- [ ] Ensure we're sending permissions correctly
