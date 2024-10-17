@@ -71,12 +71,17 @@ func (e Error) Error() string {
 				sb.WriteString(key + ": ")
 
 				for _, v := range val {
-					sb.WriteString(v + " ")
+					v = strings.ToLower(v)
+					if strings.HasSuffix(v, ".") {
+						v = v[:len(v)-1]
+					}
+
+					sb.WriteString(v + "; ")
 				}
 			}
 		}
 
-		return sb.String()[:sb.Len()-1]
+		return sb.String()[:sb.Len()-2]
 	}
 
 	return "Unhandled error"
