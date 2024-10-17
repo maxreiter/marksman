@@ -69,7 +69,7 @@ type RequestOptions struct {
 	Archived         bool               `json:"archived,omitempty" url:"-"`
 	WarrantyMonths   int32              `json:"warranty_months,omitempty" url:"-"`
 	Depreciate       bool               `json:"depreciate,omitempty" url:"-"`
-	SupplierID       int32              `json:"supplier_id,omitempty" url:"-"`
+	SupplierID       snipeit.SupplierID `json:"supplier_id,omitempty" url:"-"`
 	Requestable      bool               `json:"requestable,omitempty" url:"-"`
 	RTDLocationID    snipeit.LocationID `json:"rtd_location_id,omitempty" url:"-"`
 	LastAuditDate    string             `json:"last_audit_date,omitempty" url:"-"`
@@ -263,7 +263,7 @@ func Depreciate() RequestOption {
 }
 
 // SupplierID sets the [snipeit.SupplierID] of an [snipeit.Asset].
-func SupplierID(id int32) RequestOption {
+func SupplierID(id snipeit.SupplierID) RequestOption {
 	return func(ro *RequestOptions) {
 		ro.SupplierID = id
 	}
