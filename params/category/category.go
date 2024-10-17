@@ -1,15 +1,18 @@
+// Package category provides request configuration for methods of the [marksman.Client].
 package category
 
 import (
 	"io"
 	"net/url"
 
-	params "github.com/maxreiter/marksman/params"
+	"github.com/maxreiter/marksman/params"
 	"github.com/maxreiter/marksman/snipeit"
 )
 
+// CategoryType defines the types of models a [snipeit.Category] may represent.
 type CategoryType string
 
+// The types of models a [snipeit.Category] may represent.
 const (
 	CategoryAsset      CategoryType = "asset"
 	CategoryAccessory  CategoryType = "accessory"
@@ -18,8 +21,9 @@ const (
 	CategoryLicense    CategoryType = "license"
 )
 
+// RequestOptions contains possible options for requests made to the /categories endpoints.
 type RequestOptions struct {
-	*params.BaseResolver
+	*params.Resolver
 
 	// Query params
 	Limit      int32              `url:"limit,omitempty" json:"-"`
@@ -37,76 +41,90 @@ type RequestOptions struct {
 	CheckinEmail      bool         `url:"checkin_email,omitempty" json:"checkin_email,omitempty"`
 }
 
-func (ro *RequestOptions) Values() (url.Values, error) {
-	return ro.BaseResolver.Values()
+// Query marshals the [RequestOptions] into a [url.Values].
+func (ro *RequestOptions) Query() (url.Values, error) {
+	return ro.Resolver.Query()
 }
 
-func (ro *RequestOptions) Marshal() (io.Reader, error) {
-	return ro.BaseResolver.Marshal()
+// JSON encodes a [RequestOptions] as JSON.
+func (ro *RequestOptions) JSON() (io.Reader, error) {
+	return ro.Resolver.JSON()
 }
 
+// RequestOption is used to configure a [RequestOptions]
 type RequestOption func(*RequestOptions)
 
+// Limit sets the return limit of a request.
 func Limit(limit int32) RequestOption {
 	return func(ro *RequestOptions) {
 		ro.Limit = limit
 	}
 }
 
+// Offset sets the pagination offset of a request.
 func Offset(offset int32) RequestOption {
 	return func(ro *RequestOptions) {
 		ro.Offset = offset
 	}
 }
 
+// Search sets the search string of a request.
 func Search(search string) RequestOption {
 	return func(ro *RequestOptions) {
 		ro.Search = search
 	}
 }
 
+// Sort sets the return sort of a request.
 func Sort(sort params.SortType) RequestOption {
 	return func(ro *RequestOptions) {
 		ro.Sort = sort
 	}
 }
 
+// Order sets the return order of a request.
 func Order(order params.OrderType) RequestOption {
 	return func(ro *RequestOptions) {
 		ro.Order = order
 	}
 }
 
+// CategoryID sets the [snipeit.CategoryID] of a [snipeit.Category].
 func CategoryID(id snipeit.CategoryID) RequestOption {
 	return func(ro *RequestOptions) {
 		ro.CategoryID = id
 	}
 }
 
+// Name sets the name of a [snipeit.Category].
 func Name(name string) RequestOption {
 	return func(ro *RequestOptions) {
 		ro.Name = name
 	}
 }
 
+// Type sets the type of [snipeit.Category].
 func Type(categoryType CategoryType) RequestOption {
 	return func(ro *RequestOptions) {
 		ro.CategoryType = categoryType
 	}
 }
 
+// UseDefaultEULA forces a [snipeit.Category] to use the default EULA.
 func UseDefaultEULA() RequestOption {
 	return func(ro *RequestOptions) {
 		ro.UseDefaultEULA = true
 	}
 }
 
+// RequireAcceptance marks acceptance as required.
 func RequireAcceptance() RequestOption {
 	return func(ro *RequestOptions) {
 		ro.RequireAcceptance = true
 	}
 }
 
+// CheckinEmail toggles email checkin on a [snipeit.Category].
 func CheckinEmail() RequestOption {
 	return func(ro *RequestOptions) {
 		ro.CheckinEmail = true

@@ -1,7 +1,9 @@
 package snipeit
 
+// PermissionBool is converts binary integer strings to a primitive bool.
 type PermissionBool bool
 
+// UnmarshalJSON implements the [json.Unmarshaler] interface.
 func (b *PermissionBool) UnmarshalJSON(v []byte) error {
 	if string(v) == "1" {
 		*b = true
@@ -12,6 +14,7 @@ func (b *PermissionBool) UnmarshalJSON(v []byte) error {
 	return nil
 }
 
+// Permissions represents the permissions of a [User] in the SnipeIT interface.
 type Permissions struct {
 	Superuser PermissionBool `json:"superuser,omitempty"`
 	Admin     PermissionBool `json:"admin,omitempty"`

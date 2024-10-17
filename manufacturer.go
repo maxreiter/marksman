@@ -9,11 +9,20 @@ import (
 	"github.com/maxreiter/marksman/snipeit"
 )
 
+// Manufacturers is the expected response from endpoints that list [snipeit.Manufacturer].
 type Manufacturers struct {
 	Total int                     `json:"total"`
 	Rows  []*snipeit.Manufacturer `json:"rows"`
 }
 
+// Manufacturers fetches a list of [snipeit.Manufacturer].
+//
+// The following query parameters are accepted:
+//   - [manufacturer.Name]
+//   - [manufacturer.URL]
+//   - [manufacturer.SupportURL]
+//   - [manufacturer.SupportPhone]
+//   - [manufacturer.SupportEmail]
 func (c *Client) Manufacturers(ctx context.Context, opts ...manufacturer.RequestOption) (*Manufacturers, error) {
 	ro := &manufacturer.RequestOptions{}
 
@@ -21,7 +30,7 @@ func (c *Client) Manufacturers(ctx context.Context, opts ...manufacturer.Request
 		o(ro)
 	}
 
-	values, err := ro.Values()
+	values, err := ro.Query()
 	if err != nil {
 		return nil, err
 	}
@@ -40,6 +49,10 @@ func (c *Client) Manufacturers(ctx context.Context, opts ...manufacturer.Request
 	return response, nil
 }
 
+// CreateManufacturer creates a new [manufacturer.Manufacturer].
+//
+// The following body parameters are accepted:
+//   - [manufacturer.Name]: required
 func (c *Client) CreateManufacturer(ctx context.Context, id snipeit.ManufacturerID, opts ...manufacturer.RequestOption) error {
 	ro := &manufacturer.RequestOptions{}
 
@@ -47,7 +60,7 @@ func (c *Client) CreateManufacturer(ctx context.Context, id snipeit.Manufacturer
 		o(ro)
 	}
 
-	bod, err := ro.Marshal()
+	bod, err := ro.JSON()
 	if err != nil {
 		return err
 	}
@@ -61,6 +74,7 @@ func (c *Client) CreateManufacturer(ctx context.Context, id snipeit.Manufacturer
 	return c.do(ctx, req, nil)
 }
 
+// Manufacturer fetches a single [snipeit.Manufacturer].
 func (c *Client) Manufacturer(ctx context.Context, id snipeit.ManufacturerID) (*snipeit.Manufacturer, error) {
 	req := request{
 		method: http.MethodGet,
@@ -75,6 +89,10 @@ func (c *Client) Manufacturer(ctx context.Context, id snipeit.ManufacturerID) (*
 	return response, nil
 }
 
+// UpdateManufacturer updates a [snipeit.Manufacturer].
+//
+// The following body parameters are accepted:
+//   - [manufacturer.Name]: required
 func (c *Client) UpdateManufacturer(ctx context.Context, id snipeit.ManufacturerID, opts ...manufacturer.RequestOption) error {
 	ro := &manufacturer.RequestOptions{}
 
@@ -82,7 +100,7 @@ func (c *Client) UpdateManufacturer(ctx context.Context, id snipeit.Manufacturer
 		o(ro)
 	}
 
-	bod, err := ro.Marshal()
+	bod, err := ro.JSON()
 	if err != nil {
 		return err
 	}
@@ -96,6 +114,7 @@ func (c *Client) UpdateManufacturer(ctx context.Context, id snipeit.Manufacturer
 	return c.do(ctx, req, nil)
 }
 
+// DeleteManufacturer deletes a [snipeit.Manufacturer].
 func (c *Client) DeleteManufacturer(ctx context.Context, id snipeit.ManufacturerID) error {
 	req := request{
 		method: http.MethodDelete,

@@ -1,5 +1,6 @@
 package snipeit
 
+// Backup represents a configuration file backup.
 type Backup struct {
 	Filename      string `json:"filename"`
 	Filesize      int    `json:"filesize"`

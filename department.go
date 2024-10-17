@@ -9,11 +9,19 @@ import (
 	"github.com/maxreiter/marksman/snipeit"
 )
 
+// Departments is the expected response from endpoints that list [snipeit.Department].
 type Departments struct {
 	Total int                   `json:"total"`
 	Rows  []*snipeit.Department `json:"rows"`
 }
 
+// Departments fetches a list of [snipeit.Department].
+//
+// The following query parameters are accepted:
+//   - [department.Name]
+//   - [department.CompanyID]
+//   - [department.ManagerID]
+//   - [department.LocationID]
 func (c *Client) Departments(ctx context.Context, opts ...department.RequestOption) (*Departments, error) {
 	ro := &department.RequestOptions{}
 
@@ -21,7 +29,7 @@ func (c *Client) Departments(ctx context.Context, opts ...department.RequestOpti
 		o(ro)
 	}
 
-	values, err := ro.Values()
+	values, err := ro.Query()
 	if err != nil {
 		return nil, err
 	}
@@ -40,6 +48,10 @@ func (c *Client) Departments(ctx context.Context, opts ...department.RequestOpti
 	return response, nil
 }
 
+// CreateDepartment creates a new [snipeit.Department].
+//
+// The following body parameters are accepted:
+//   - [department.Name]: required
 func (c *Client) CreateDepartment(ctx context.Context, opts ...department.RequestOption) error {
 	ro := &department.RequestOptions{}
 
@@ -47,7 +59,7 @@ func (c *Client) CreateDepartment(ctx context.Context, opts ...department.Reques
 		o(ro)
 	}
 
-	bod, err := ro.Marshal()
+	bod, err := ro.JSON()
 	if err != nil {
 		return err
 	}
@@ -61,6 +73,7 @@ func (c *Client) CreateDepartment(ctx context.Context, opts ...department.Reques
 	return c.do(ctx, req, nil)
 }
 
+// Department fetches a single [snipeit.Department].
 func (c *Client) Department(ctx context.Context, id snipeit.DepartmentID) (*snipeit.Department, error) {
 	req := request{
 		method: http.MethodGet,
@@ -75,6 +88,10 @@ func (c *Client) Department(ctx context.Context, id snipeit.DepartmentID) (*snip
 	return response, nil
 }
 
+// UpdateDepartment updates a [snipeit.Department].
+//
+// The following body parameters are accepted:
+//   - [department.Name]: required
 func (c *Client) UpdateDepartment(ctx context.Context, id snipeit.DepartmentID, opts ...department.RequestOption) error {
 	ro := &department.RequestOptions{}
 
@@ -82,7 +99,7 @@ func (c *Client) UpdateDepartment(ctx context.Context, id snipeit.DepartmentID, 
 		o(ro)
 	}
 
-	bod, err := ro.Marshal()
+	bod, err := ro.JSON()
 	if err != nil {
 		return err
 	}
@@ -96,6 +113,7 @@ func (c *Client) UpdateDepartment(ctx context.Context, id snipeit.DepartmentID, 
 	return c.do(ctx, req, nil)
 }
 
+// DeleteDepartment deletes a [snipeit.Department].
 func (c *Client) DeleteDepartment(ctx context.Context, id snipeit.DepartmentID) error {
 	req := request{
 		method: http.MethodDelete,

@@ -1,5 +1,6 @@
 package snipeit
 
+// AvailableActions represents actions a [User] may perform on a model.
 type AvailableActions struct {
 	Update         bool `json:"update,omitempty"`
 	Delete         bool `json:"delete,omitempty"`

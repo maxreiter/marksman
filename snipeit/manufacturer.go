@@ -2,6 +2,7 @@ package snipeit
 
 import "github.com/maxreiter/marksman/snipeit/null"
 
+// Manufacturer represents a manufacturer in the SnipeIT interface.
 type Manufacturer struct {
 	ID                ManufacturerID      `json:"id"`
 	Name              string              `json:"name"`

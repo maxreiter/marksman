@@ -2,6 +2,7 @@ package snipeit
 
 import "github.com/maxreiter/marksman/snipeit/null"
 
+// FieldFormat represents the format of a [Field].
 type FieldFormat string
 
 const (
@@ -21,6 +22,7 @@ const (
 	FieldFormatCustom       FieldFormat = "CUSTOM"
 )
 
+// Field represents a custom field seen on the SnipeIT interface.
 type Field struct {
 	ID                 FieldID             `json:"id"`
 	Name               string              `json:"name"`
@@ -37,6 +39,7 @@ type Field struct {
 	UpdatedAt          Datetime            `json:"updated_at,omitempty"`
 }
 
+// Fieldset represents a set of [Field] seen on the SnipeIT interface.
 type Fieldset struct {
 	ID        FieldsetID `json:"id"`
 	Name      string     `json:"name"`

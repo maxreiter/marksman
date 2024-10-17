@@ -9,11 +9,22 @@ import (
 	"github.com/maxreiter/marksman/snipeit"
 )
 
+// Accessories is the expected response from endpoints that list accessories.
 type Accessories struct {
 	Total int                  `json:"total"`
 	Rows  []*snipeit.Accessory `json:"rows"`
 }
 
+// Accessories fetches a list of [snipeit.Accessory].
+//
+// The following query parameters are accepted:
+//   - [accessory.Limit]: defaults to 50
+//   - [accessory.Offset]: defaults to 0
+//   - [accessory.Search]
+//   - [accessory.OrderNumber]: defaults to null
+//   - [accessory.Sort]: defaults to "created_at"
+//   - [accessory.Order]: defaults to "desc"
+//   - [accessory.Expand]: defaults to false
 func (c *Client) Accessories(ctx context.Context, opts ...accessory.RequestOption) (*Accessories, error) {
 	ro := &accessory.RequestOptions{}
 
@@ -21,7 +32,7 @@ func (c *Client) Accessories(ctx context.Context, opts ...accessory.RequestOptio
 		o(ro)
 	}
 
-	values, err := ro.Values()
+	values, err := ro.Query()
 	if err != nil {
 		return nil, err
 	}
@@ -40,6 +51,20 @@ func (c *Client) Accessories(ctx context.Context, opts ...accessory.RequestOptio
 	return response, nil
 }
 
+// CreateAccessory creates a new [snipeit.Accessory].
+//
+// The following body parameters are accepted:
+//   - [accessory.Name]: required
+//   - [accessory.Qty]: required
+//   - [accessory.CategoryID]: required
+//   - [accessory.OrderNumber]
+//   - [accessory.PurchaseCost]
+//   - [accessory.PurchaseDate]
+//   - [accessory.ModelNumber]
+//   - [accessory.CompanyID]
+//   - [accessory.LocationID]
+//   - [accessory.ManufacturerID]
+//   - [accessory.SupplierID]
 func (c *Client) CreateAccessory(ctx context.Context, opts ...accessory.RequestOption) error {
 	ro := &accessory.RequestOptions{}
 
@@ -47,7 +72,7 @@ func (c *Client) CreateAccessory(ctx context.Context, opts ...accessory.RequestO
 		o(ro)
 	}
 
-	bod, err := ro.Marshal()
+	bod, err := ro.JSON()
 	if err != nil {
 		return err
 	}
@@ -61,6 +86,7 @@ func (c *Client) CreateAccessory(ctx context.Context, opts ...accessory.RequestO
 	return c.do(ctx, req, nil)
 }
 
+// Accessory fetches a single [snipeit.Accessory].
 func (c *Client) Accessory(ctx context.Context, id snipeit.AccessoryID) (*snipeit.Accessory, error) {
 	req := request{
 		method: http.MethodGet,
@@ -75,6 +101,20 @@ func (c *Client) Accessory(ctx context.Context, id snipeit.AccessoryID) (*snipei
 	return response, nil
 }
 
+// UpdateAccessory updates an [snipeit.Accessory].
+//
+// The following body parameters are accepted:
+//   - [accessory.Name]: required
+//   - [accessory.Qty]: required
+//   - [accessory.CategoryID]: required
+//   - [accessory.OrderNumber]
+//   - [accessory.PurchaseCost]
+//   - [accessory.PurchaseDate]
+//   - [accessory.ModelNumber]
+//   - [accessory.CompanyID]
+//   - [accessory.LocationID]
+//   - [accessory.ManufacturerID]
+//   - [accessory.SupplierID]
 func (c *Client) UpdateAccessory(ctx context.Context, id snipeit.AccessoryID, opts ...accessory.RequestOption) error {
 	ro := &accessory.RequestOptions{}
 
@@ -82,7 +122,7 @@ func (c *Client) UpdateAccessory(ctx context.Context, id snipeit.AccessoryID, op
 		o(ro)
 	}
 
-	bod, err := ro.Marshal()
+	bod, err := ro.JSON()
 	if err != nil {
 		return err
 	}
@@ -96,6 +136,7 @@ func (c *Client) UpdateAccessory(ctx context.Context, id snipeit.AccessoryID, op
 	return c.do(ctx, req, nil)
 }
 
+// DeleteAccessory deletes an [snipe.Accessory].
 func (c *Client) DeleteAccessory(ctx context.Context, id snipeit.AccessoryID) error {
 	req := request{
 		method: http.MethodDelete,
@@ -105,6 +146,11 @@ func (c *Client) DeleteAccessory(ctx context.Context, id snipeit.AccessoryID) er
 	return c.do(ctx, req, nil)
 }
 
+// AccessoryCheckouts fetches the list of checkouts associated with an [snipeit.Accessory].
+//
+// The following query parameters are accepted:
+//   - [accessory.Limit]
+//   - [accessory.Offset]
 func (c *Client) AccessoryCheckouts(ctx context.Context, id snipeit.AccessoryID, opts ...accessory.RequestOption) (*Accessories, error) {
 	ro := &accessory.RequestOptions{}
 
@@ -112,7 +158,7 @@ func (c *Client) AccessoryCheckouts(ctx context.Context, id snipeit.AccessoryID,
 		o(ro)
 	}
 
-	values, err := ro.Values()
+	values, err := ro.Query()
 	if err != nil {
 		return nil, err
 	}
@@ -131,6 +177,16 @@ func (c *Client) AccessoryCheckouts(ctx context.Context, id snipeit.AccessoryID,
 	return response, nil
 }
 
+// CheckoutAccessory checks an [snipeit.Accessory] out to a [snipeit.User].
+//
+// The following query parameters are accepted:
+//   - [accessory.Limit]
+//   - [accessory.Offset]
+//
+// The following body parameters are accepted:
+//   - [accessory.AssignedUser]: required
+//   - [accessory.Note]
+//   - [accessory.CheckoutQty]: defaults to 1
 func (c *Client) CheckoutAccessory(ctx context.Context, id snipeit.AccessoryID, opts ...accessory.RequestOption) error {
 	ro := &accessory.RequestOptions{}
 
@@ -138,12 +194,12 @@ func (c *Client) CheckoutAccessory(ctx context.Context, id snipeit.AccessoryID, 
 		o(ro)
 	}
 
-	values, err := ro.Values()
+	values, err := ro.Query()
 	if err != nil {
 		return err
 	}
 
-	bod, err := ro.Marshal()
+	bod, err := ro.JSON()
 	if err != nil {
 		return err
 	}
@@ -158,6 +214,7 @@ func (c *Client) CheckoutAccessory(ctx context.Context, id snipeit.AccessoryID, 
 	return c.do(ctx, req, nil)
 }
 
+// CheckinAccessory checks an [snipeit.Accessory] in from a [snipeit.User].
 func (c *Client) CheckinAccessory(ctx context.Context, id int32) error {
 	req := request{
 		method: http.MethodPost,

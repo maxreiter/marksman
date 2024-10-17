@@ -5,8 +5,10 @@ import (
 	"time"
 )
 
+// Datetime wraps the [time.Time] type for JSON support.
 type Datetime time.Time
 
+// UnmarshalJSON implements the [json.Unmarshaler] interface.
 func (d *Datetime) UnmarshalJSON(v []byte) error {
 	if string(v) == "null" {
 		*d = Datetime{}

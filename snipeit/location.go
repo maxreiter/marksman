@@ -2,6 +2,7 @@ package snipeit
 
 import "github.com/maxreiter/marksman/snipeit/null"
 
+// Location represents a location in the SnipeIT interface.
 type Location struct {
 	ID                  LocationID          `json:"id"`
 	Name                string              `json:"name"`

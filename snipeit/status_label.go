@@ -2,14 +2,17 @@ package snipeit
 
 import "github.com/maxreiter/marksman/snipeit/null"
 
+// StatusLabelType represents the different types of [StatusLabel] in the SnipeIT interface.
 type StatusLabelType string
 
+// Types of status labels found in the SnipeIT interface.
 const (
 	StatusLabelTypePending      StatusLabelType = "pending"
 	StatusLabelTypeArchived     StatusLabelType = "archived"
 	StatusLabelTypeUndeployable StatusLabelType = "undeployable"
 )
 
+// StatusLabel represents a label signifying the status of a model found in the SnipeIT interface.
 type StatusLabel struct {
 	ID               StatusLabelID       `json:"id"`
 	Name             string              `json:"name"`

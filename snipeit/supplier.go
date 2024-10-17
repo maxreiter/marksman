@@ -2,6 +2,7 @@ package snipeit
 
 import "github.com/maxreiter/marksman/snipeit/null"
 
+// Supplier represents a supplier in the SnipeIT interface.
 type Supplier struct {
 	ID               SupplierID          `json:"id"`
 	Name             string              `json:"name"`

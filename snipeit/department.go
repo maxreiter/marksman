@@ -2,6 +2,7 @@ package snipeit
 
 import "github.com/maxreiter/marksman/snipeit/null"
 
+// Department represents an institutional department in the SnipeIT interface.
 type Department struct {
 	ID               DepartmentID        `json:"id"`
 	Name             string              `json:"name"`

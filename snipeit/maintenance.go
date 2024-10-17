@@ -2,8 +2,10 @@ package snipeit
 
 import "github.com/maxreiter/marksman/snipeit/null"
 
+// AssetMaintenanceType represents the types of maintenance an [Asset] may undergo.
 type AssetMaintenanceType string
 
+// Different types of maintenance an [Asset] may undergo.
 const (
 	MaintenanceGeneral         AssetMaintenanceType = "Maintenance"
 	MaintenanceRepair          AssetMaintenanceType = "Repair"
@@ -13,6 +15,7 @@ const (
 	MaintenanceSoftwareSupport AssetMaintenanceType = "Software Support"
 )
 
+// Maintenance represents the maintenance of an [Asset] in the SnipeIT interface.
 type Maintenance struct {
 	ID                   MaintenanceID        `json:"id"`
 	Asset                *Asset               `json:"asset"`

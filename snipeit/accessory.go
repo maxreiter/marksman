@@ -2,6 +2,7 @@ package snipeit
 
 import "github.com/maxreiter/marksman/snipeit/null"
 
+// Accessory represents an accessory in the SnipeIT interface.
 type Accessory struct {
 	ID               AccessoryID         `json:"id"`
 	Name             string              `json:"name"`

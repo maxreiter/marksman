@@ -2,6 +2,7 @@ package snipeit
 
 import "github.com/maxreiter/marksman/snipeit/null"
 
+// Model represents a device model in the SnipeIT interface.
 type Model struct {
 	ID                    ModelID             `json:"id"`
 	Name                  string              `json:"name"`

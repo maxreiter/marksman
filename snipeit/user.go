@@ -2,6 +2,7 @@ package snipeit
 
 import "github.com/maxreiter/marksman/snipeit/null"
 
+// User represents a user of SnipeIT.
 type User struct {
 	ID                    UserID              `json:"id"`
 	Avatar                null.NullableString `json:"avatar,omitempty"`

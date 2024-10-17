@@ -1,5 +1,6 @@
 package snipeit
 
+// Depreciation represents the depreciation of an asset over its useful life.
 type Depreciation struct {
 	ID               DepreciationID    `json:"id"`
 	Name             string            `json:"name"`

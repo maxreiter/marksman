@@ -18,8 +18,8 @@ func TestUser(t *testing.T) {
 	}
 
 	client, err := New(
-		WithRoot(root),
-		WithToken(token),
+		Root(root),
+		Token(token),
 	)
 	if err != nil {
 		t.Fatalf("Error creating client: %s", err.Error())

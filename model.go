@@ -9,11 +9,20 @@ import (
 	"github.com/maxreiter/marksman/snipeit"
 )
 
+// Models is the expected response from endpoints that list [snipeit.Model].
 type Models struct {
 	Total int              `json:"total"`
 	Rows  []*snipeit.Model `json:"rows"`
 }
 
+// Models fetches a list of [snipeit.Model].
+//
+// The following query parameters are accepted:
+//   - [model.Limit]: defaults to 50
+//   - [model.Offset]: defaults to 0
+//   - [model.Search]
+//   - [model.Sort]: defaults to "created_at"
+//   - [model.Order]: defaults to "asc"
 func (c *Client) Models(ctx context.Context, opts ...model.RequestOption) (*Models, error) {
 	ro := &model.RequestOptions{}
 
@@ -21,7 +30,7 @@ func (c *Client) Models(ctx context.Context, opts ...model.RequestOption) (*Mode
 		o(ro)
 	}
 
-	values, err := ro.Values()
+	values, err := ro.Query()
 	if err != nil {
 		return nil, err
 	}
@@ -40,6 +49,15 @@ func (c *Client) Models(ctx context.Context, opts ...model.RequestOption) (*Mode
 	return response, nil
 }
 
+// CreateModel creates a new [snipeit.Model].
+//
+// The following body parameters are accepted:
+//   - [model.Name]: required
+//   - [model.CategoryID]: required
+//   - [model.ModelNumber]
+//   - [model.ManufacturerID]
+//   - [model.EOL]
+//   - [model.FieldsetID]
 func (c *Client) CreateModel(ctx context.Context, opts ...model.RequestOption) error {
 	ro := &model.RequestOptions{}
 
@@ -47,7 +65,7 @@ func (c *Client) CreateModel(ctx context.Context, opts ...model.RequestOption) e
 		o(ro)
 	}
 
-	bod, err := ro.Marshal()
+	bod, err := ro.JSON()
 	if err != nil {
 		return err
 	}
@@ -68,7 +86,7 @@ func (c *Client) Model(ctx context.Context, id snipeit.ModelID, opts ...model.Re
 		o(ro)
 	}
 
-	values, err := ro.Values()
+	values, err := ro.Query()
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +112,7 @@ func (c *Client) UpdateModel(ctx context.Context, id snipeit.ModelID, opts ...mo
 		o(ro)
 	}
 
-	bod, err := ro.Marshal()
+	bod, err := ro.JSON()
 	if err != nil {
 		return err
 	}

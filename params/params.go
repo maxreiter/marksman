@@ -1,3 +1,4 @@
+// Package params provides universal parameters for use in subpackages.
 package params
 
 import (
@@ -9,8 +10,10 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// SortType represents the different columns one may sort by in a request.
 type SortType string
 
+// The various columns a request response may be sorted by.
 const (
 	SortID              SortType = "id"
 	SortName            SortType = "name"
@@ -34,25 +37,26 @@ const (
 	SortPurchaseCost    SortType = "purchase_cost"
 )
 
+// OrderType represents the way one may order results from a request.
 type OrderType string
 
+// Different directions a request response may be ordered.
 const (
 	OrderAsc  OrderType = "asc"
 	OrderDesc OrderType = "desc"
 )
 
-type Resolver interface {
-	Values() (url.Values, error)
-	Marshal() (io.Reader, error)
-}
+// Resolver is used to resolve request options into different types.
+// Such as JSON encoded bodies or URL encoded query parameters.
+type Resolver struct{}
 
-type BaseResolver struct{}
-
-func (r *BaseResolver) Values() (url.Values, error) {
+// Query marshals the [Resolver] into a [url.Values].
+func (r *Resolver) Query() (url.Values, error) {
 	return query.Values(r)
 }
 
-func (r *BaseResolver) Marshal() (io.Reader, error) {
+// JSON encodes the [Resolver] as JSON.
+func (r *Resolver) JSON() (io.Reader, error) {
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(r); err != nil {
 		return nil, err

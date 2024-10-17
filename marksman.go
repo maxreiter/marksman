@@ -1,4 +1,4 @@
-// package marksman implements an API client for the Snipe-IT API.
+// Package marksman implements a fully capable API client for the SnipeIT API.
 package marksman
 
 import (
@@ -9,6 +9,7 @@ import (
 )
 
 const (
+	// Version is the SemVer-compliant version string used by marksman for the User-Agent header in HTTP requests.
 	Version = "0.0.1"
 
 	headerContentType = "application/json"
@@ -25,6 +26,8 @@ var (
 	}
 )
 
+// Client is an HTTP client responsible for interfacing with the SnipeIT API.
+// It provides methods for every possible route found within the API.
 type Client struct {
 	root  string
 	token string
@@ -32,6 +35,8 @@ type Client struct {
 	client *http.Client
 }
 
+// New creates a new client with the given options.
+// See [Option] for more information about configuration.
 func New(opts ...Option) (*Client, error) {
 	c := &Client{}
 

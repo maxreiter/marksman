@@ -2,6 +2,7 @@ package snipeit
 
 import "github.com/maxreiter/marksman/snipeit/null"
 
+// Component represents a component in the SnipeIT interface.
 type Component struct {
 	ID               ComponentID         `json:"id"`
 	Name             string              `json:"name"`

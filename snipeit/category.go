@@ -2,8 +2,10 @@ package snipeit
 
 import "github.com/maxreiter/marksman/snipeit/null"
 
+// CategoryType defines the type of category an object falls under.
 type CategoryType string
 
+// Possible types of categories.
 const (
 	CategoryTypeAccessory  CategoryType = "accessory"
 	CategoryTypeAsset      CategoryType = "asset"
@@ -12,6 +14,8 @@ const (
 	CategoryTypeLicense    CategoryType = "license"
 )
 
+// Category represents a category in SnipeIT interface.
+// They describe the general type of asset or accessory.
 type Category struct {
 	ID                CategoryID          `json:"id"`
 	Name              string              `json:"name"`

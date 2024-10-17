@@ -9,11 +9,13 @@ import (
 	"github.com/maxreiter/marksman/snipeit"
 )
 
+// Fieldsets is the expected response from endpoints that list fieldsets.
 type Fieldsets struct {
 	Total int                 `json:"total"`
 	Rows  []*snipeit.Fieldset `json:"rows"`
 }
 
+// Fieldsets fetches a list of [snipeit.Fieldset].
 func (c *Client) Fieldsets(ctx context.Context) (*Fieldsets, error) {
 	req := request{
 		method: http.MethodGet,
@@ -28,6 +30,10 @@ func (c *Client) Fieldsets(ctx context.Context) (*Fieldsets, error) {
 	return response, nil
 }
 
+// CreateFieldset creates a new [snipeit.Fieldset].
+//
+// The following body parameters are accepted:
+//   - [fieldset.Name]: required
 func (c *Client) CreateFieldset(ctx context.Context, opts ...fieldset.RequestOption) error {
 	ro := &fieldset.RequestOptions{}
 
@@ -35,7 +41,7 @@ func (c *Client) CreateFieldset(ctx context.Context, opts ...fieldset.RequestOpt
 		o(ro)
 	}
 
-	bod, err := ro.Marshal()
+	bod, err := ro.JSON()
 	if err != nil {
 		return err
 	}
@@ -49,6 +55,7 @@ func (c *Client) CreateFieldset(ctx context.Context, opts ...fieldset.RequestOpt
 	return c.do(ctx, req, nil)
 }
 
+// Fieldset fetches a single [snipeit.Fieldset].
 func (c *Client) Fieldset(ctx context.Context, id snipeit.FieldsetID) (*snipeit.Fieldset, error) {
 	req := request{
 		method: http.MethodGet,
@@ -63,6 +70,10 @@ func (c *Client) Fieldset(ctx context.Context, id snipeit.FieldsetID) (*snipeit.
 	return response, nil
 }
 
+// UpdateFieldset updates a [snipeit.Fieldset].
+//
+// The following body parameters are accepted:
+//   - [fieldset.Name]: required
 func (c *Client) UpdateFieldset(ctx context.Context, id snipeit.FieldsetID, opts ...fieldset.RequestOption) error {
 	ro := &fieldset.RequestOptions{}
 
@@ -70,7 +81,7 @@ func (c *Client) UpdateFieldset(ctx context.Context, id snipeit.FieldsetID, opts
 		o(ro)
 	}
 
-	bod, err := ro.Marshal()
+	bod, err := ro.JSON()
 	if err != nil {
 		return err
 	}
@@ -84,6 +95,7 @@ func (c *Client) UpdateFieldset(ctx context.Context, id snipeit.FieldsetID, opts
 	return c.do(ctx, req, nil)
 }
 
+// DeleteFieldset deletes a [snipeit.Fieldset].
 func (c *Client) DeleteFieldset(ctx context.Context, id snipeit.FieldsetID) error {
 	req := request{
 		method: http.MethodDelete,
@@ -93,6 +105,7 @@ func (c *Client) DeleteFieldset(ctx context.Context, id snipeit.FieldsetID) erro
 	return c.do(ctx, req, nil)
 }
 
+// FieldsetFields fetches a list of [snipeit.Field] associated with a [snipeit.Fieldset].
 func (c *Client) FieldsetFields(ctx context.Context, id snipeit.FieldsetID) (*Fields, error) {
 	req := request{
 		method: http.MethodGet,

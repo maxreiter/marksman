@@ -1,5 +1,6 @@
 package snipeit
 
+// Group represents a collection of [User].
 type Group struct {
 	ID               GroupID           `json:"id"`
 	Name             string            `json:"name"`

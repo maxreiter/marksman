@@ -2,14 +2,16 @@ package snipeit
 
 import "github.com/maxreiter/marksman/snipeit/null"
 
+// AssignmentType defines the type of assignment an [Asset] may have.
 type AssignmentType string
 
 const (
-	AssignmentTypeUser     AssignmentType = "user"
-	AssignmentTypeAsset    AssignmentType = "asset"
-	AssignmentTypeLocation AssignmentType = "location"
+	AssignmentTypeUser     AssignmentType = "user"     // when an [Asset] is assigned to a [User].
+	AssignmentTypeAsset    AssignmentType = "asset"    // when an [Asset] is assigned to another asset.
+	AssignmentTypeLocation AssignmentType = "location" // when an [Asset] is assigned to a [Location].
 )
 
+// Assignment represents an [Asset] assignment.
 type Assignment struct {
 	ID          UserID              `json:"id"`
 	Username    string              `json:"username,omitempty"`
@@ -21,6 +23,7 @@ type Assignment struct {
 	Type        AssignmentType      `json:"type,omitempty"`
 }
 
+// Asset represents an asset in the SnipeIT interface.
 type Asset struct {
 	ID               AssetID             `json:"id"`
 	Name             string              `json:"name"`

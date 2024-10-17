@@ -2,6 +2,7 @@ package snipeit
 
 import "github.com/maxreiter/marksman/snipeit/null"
 
+// Consumable represents a consumable item in the SnipeIT interface.
 type Consumable struct {
 	ID               ConsumableID        `json:"id"`
 	Name             string              `json:"name"`

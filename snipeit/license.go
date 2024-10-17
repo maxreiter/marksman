@@ -2,6 +2,7 @@ package snipeit
 
 import "github.com/maxreiter/marksman/snipeit/null"
 
+// LicenseSeat represents the model a [License] is assigned to.
 type LicenseSeat struct {
 	ID               LicenseSeatID       `json:"id"`
 	LicenseID        LicenseID           `json:"license_id"`
@@ -14,6 +15,7 @@ type LicenseSeat struct {
 	AvailableActions *AvailableActions   `json:"available_actions,omitempty"`
 }
 
+// License represents a license in the SnipeIT interface.
 type License struct {
 	ID                  LicenseID           `json:"id"`
 	Name                string              `json:"name"`

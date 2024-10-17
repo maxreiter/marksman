@@ -1,3 +1,4 @@
+// Package statuslabel provides request configuration for methods of the [marksman.Client].
 package statuslabel
 
 import (
@@ -7,8 +8,10 @@ import (
 	"github.com/maxreiter/marksman/params"
 )
 
+// StatusType represents the status of an [snipeit.StatusLabel].
 type StatusType string
 
+// Possible statuses that a [snipeit.StatusLabel] may be.
 const (
 	StatusDeployable   StatusType = "deployable"
 	StatusUndeployable StatusType = "undeployable"
@@ -16,8 +19,9 @@ const (
 	StatusArchived     StatusType = "archived"
 )
 
+// RequestOptions contains possible options for requests made to the /statuslabels endpoints.
 type RequestOptions struct {
-	*params.BaseResolver
+	*params.Resolver
 
 	// Query params
 	Limit  int32            `url:"limit,omitempty" json:"-"`
@@ -37,76 +41,90 @@ type RequestOptions struct {
 	DefaultLabel bool   `json:"default_label,omitempty" url:"-"`
 }
 
-func (ro *RequestOptions) Values() (url.Values, error) {
-	return ro.BaseResolver.Values()
+// Query marshals the [RequestOptions] as a [url.Values].
+func (ro *RequestOptions) Query() (url.Values, error) {
+	return ro.Resolver.Query()
 }
 
-func (ro *RequestOptions) Marshal() (io.Reader, error) {
-	return ro.BaseResolver.Marshal()
+// JSON encodes the [RequestOptions] as JSON.
+func (ro *RequestOptions) JSON() (io.Reader, error) {
+	return ro.Resolver.JSON()
 }
 
+// RequestOption is used to configure a [RequestOptions].
 type RequestOption func(*RequestOptions)
 
+// Limit sets the return limit of a request.
 func Limit(limit int32) RequestOption {
 	return func(ro *RequestOptions) {
 		ro.Limit = limit
 	}
 }
 
+// Offset sets the pagination offset of a request.
 func Offset(offset int32) RequestOption {
 	return func(ro *RequestOptions) {
 		ro.Offset = offset
 	}
 }
 
+// Search sets the search string of a request.
 func Search(search string) RequestOption {
 	return func(ro *RequestOptions) {
 		ro.Search = search
 	}
 }
 
+// Sort sets the return sort of a request.
 func Sort(sort params.SortType) RequestOption {
 	return func(ro *RequestOptions) {
 		ro.Sort = sort
 	}
 }
 
+// Order sets the return order of a request.
 func Order(order params.OrderType) RequestOption {
 	return func(ro *RequestOptions) {
 		ro.Order = order
 	}
 }
 
+// Name sets the name of a [snipeit.StatusLabel].
 func Name(name string) RequestOption {
 	return func(ro *RequestOptions) {
 		ro.Name = name
 	}
 }
 
+// Type sets the status type of a [snipeit.StatusLabel].
 func Type(status StatusType) RequestOption {
 	return func(ro *RequestOptions) {
 		ro.StatusType = status
 	}
 }
 
+// Notes set the notes of a [snipeit.StatusLabel].
 func Notes(notes string) RequestOption {
 	return func(ro *RequestOptions) {
 		ro.Notes = notes
 	}
 }
 
+// Color sets the color of a [snipeit.StatusLabel].
 func Color(color string) RequestOption {
 	return func(ro *RequestOptions) {
 		ro.Color = color
 	}
 }
 
+// ShowInNav marks a [snipeit.StatusLabel] to be shown in navigation.
 func ShowInNav() RequestOption {
 	return func(ro *RequestOptions) {
 		ro.ShowInNav = true
 	}
 }
 
+// DefaultLabel marks a [snipeit.StatusLabel] to use the default label.
 func DefaultLabel() RequestOption {
 	return func(ro *RequestOptions) {
 		ro.DefaultLabel = true

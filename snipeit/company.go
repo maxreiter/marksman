@@ -2,6 +2,7 @@ package snipeit
 
 import "github.com/maxreiter/marksman/snipeit/null"
 
+// Company represents a company in the SnipeIT interface.
 type Company struct {
 	ID               CompanyID           `json:"company"`
 	Name             string              `json:"name"`

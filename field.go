@@ -9,11 +9,13 @@ import (
 	"github.com/maxreiter/marksman/snipeit"
 )
 
+// Fields is the expected response from endpoints listing [snipeit.Field].
 type Fields struct {
 	Total int              `json:"total"`
 	Rows  []*snipeit.Field `json:"rows"`
 }
 
+// Fields fetches a list of [snipeit.Field].
 func (c *Client) Fields(ctx context.Context) (*Fields, error) {
 	req := request{
 		method: http.MethodGet,
@@ -28,6 +30,16 @@ func (c *Client) Fields(ctx context.Context) (*Fields, error) {
 	return response, nil
 }
 
+// CreateField creates a new [snipeit.Field].
+//
+// The following body parameters are accepted:
+//   - [field.Name]: required
+//   - [field.Element]: required
+//   - [field.FieldValues]
+//   - [field.ShowInEmail]: defaults to false
+//   - [field.Format]
+//   - [field.FieldEncrypted]: defaults to false
+//   - [field.HelpText]
 func (c *Client) CreateField(ctx context.Context, opts ...field.RequestOption) error {
 	ro := &field.RequestOptions{}
 
@@ -35,7 +47,7 @@ func (c *Client) CreateField(ctx context.Context, opts ...field.RequestOption) e
 		o(ro)
 	}
 
-	bod, err := ro.Marshal()
+	bod, err := ro.JSON()
 	if err != nil {
 		return err
 	}
@@ -49,6 +61,7 @@ func (c *Client) CreateField(ctx context.Context, opts ...field.RequestOption) e
 	return c.do(ctx, req, nil)
 }
 
+// Field fetches a single [snipeit.Field].
 func (c *Client) Field(ctx context.Context, id snipeit.FieldID) (*snipeit.Field, error) {
 	req := request{
 		method: http.MethodGet,
@@ -63,6 +76,11 @@ func (c *Client) Field(ctx context.Context, id snipeit.FieldID) (*snipeit.Field,
 	return response, nil
 }
 
+// UpdateField updates a [snipeit.Field].
+//
+// The following body parameters are accepted:
+//   - [field.Name]: required
+//   - [field.Element]: required
 func (c *Client) UpdateField(ctx context.Context, id snipeit.FieldID, opts ...field.RequestOption) error {
 	ro := &field.RequestOptions{}
 
@@ -70,7 +88,7 @@ func (c *Client) UpdateField(ctx context.Context, id snipeit.FieldID, opts ...fi
 		o(ro)
 	}
 
-	bod, err := ro.Marshal()
+	bod, err := ro.JSON()
 	if err != nil {
 		return err
 	}
@@ -84,6 +102,7 @@ func (c *Client) UpdateField(ctx context.Context, id snipeit.FieldID, opts ...fi
 	return c.do(ctx, req, nil)
 }
 
+// DeleteField deletes a [snipeit.Field].
 func (c *Client) DeleteField(ctx context.Context, id snipeit.FieldID) error {
 	req := request{
 		method: http.MethodDelete,
@@ -93,6 +112,10 @@ func (c *Client) DeleteField(ctx context.Context, id snipeit.FieldID) error {
 	return c.do(ctx, req, nil)
 }
 
+// AssociateField associates a [snipeit.Field] with a [snipeit.Fieldset].
+//
+// The following body parameters are accepted:
+//   - [field.FieldsetID]: required
 func (c *Client) AssociateField(ctx context.Context, id snipeit.FieldID, opts ...field.RequestOption) error {
 	ro := &field.RequestOptions{}
 
@@ -100,7 +123,7 @@ func (c *Client) AssociateField(ctx context.Context, id snipeit.FieldID, opts ..
 		o(ro)
 	}
 
-	bod, err := ro.Marshal()
+	bod, err := ro.JSON()
 	if err != nil {
 		return err
 	}
@@ -114,6 +137,10 @@ func (c *Client) AssociateField(ctx context.Context, id snipeit.FieldID, opts ..
 	return c.do(ctx, req, nil)
 }
 
+// DisassociateField disassociates a [snipeit.Field] from a [snipeit.Fieldset].
+//
+// The following body parameters are accepted:
+//   - [field.FieldsetID]: required
 func (c *Client) DisassociateField(ctx context.Context, id snipeit.FieldID, opts ...field.RequestOption) error {
 	ro := &field.RequestOptions{}
 
@@ -121,7 +148,7 @@ func (c *Client) DisassociateField(ctx context.Context, id snipeit.FieldID, opts
 		o(ro)
 	}
 
-	bod, err := ro.Marshal()
+	bod, err := ro.JSON()
 	if err != nil {
 		return err
 	}

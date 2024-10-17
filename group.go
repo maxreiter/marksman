@@ -9,11 +9,16 @@ import (
 	"github.com/maxreiter/marksman/snipeit"
 )
 
+// Groups is the expected response from endpoints that list [snipeit.Group].
 type Groups struct {
 	Total int              `json:"total"`
 	Rows  []*snipeit.Group `json:"rows"`
 }
 
+// Groups fetches a list of [snipeit.Group].
+//
+// The following query parameters are accepted:
+//   - [group.Name]
 func (c *Client) Groups(ctx context.Context, opts ...group.RequestOption) (*Groups, error) {
 	ro := &group.RequestOptions{}
 
@@ -21,7 +26,7 @@ func (c *Client) Groups(ctx context.Context, opts ...group.RequestOption) (*Grou
 		o(ro)
 	}
 
-	values, err := ro.Values()
+	values, err := ro.Query()
 	if err != nil {
 		return nil, err
 	}
@@ -40,6 +45,7 @@ func (c *Client) Groups(ctx context.Context, opts ...group.RequestOption) (*Grou
 	return response, nil
 }
 
+// Group fetches a single [snipeit.Group].
 func (c *Client) Group(ctx context.Context, id snipeit.GroupID) (*snipeit.Group, error) {
 	req := request{
 		method: http.MethodGet,
@@ -54,6 +60,11 @@ func (c *Client) Group(ctx context.Context, id snipeit.GroupID) (*snipeit.Group,
 	return response, nil
 }
 
+// CreateGroup creates a new [snipeit.Group].
+//
+// The following body parameters are accepted:
+//   - [group.Name]: required
+//   - [group.Permissions]
 func (c *Client) CreateGroup(ctx context.Context, opts ...group.RequestOption) error {
 	ro := &group.RequestOptions{}
 
@@ -61,7 +72,7 @@ func (c *Client) CreateGroup(ctx context.Context, opts ...group.RequestOption) e
 		o(ro)
 	}
 
-	bod, err := ro.Marshal()
+	bod, err := ro.JSON()
 	if err != nil {
 		return err
 	}
@@ -75,6 +86,11 @@ func (c *Client) CreateGroup(ctx context.Context, opts ...group.RequestOption) e
 	return c.do(ctx, req, nil)
 }
 
+// UpdateGroup updates a [snipeit.Group].
+//
+// The following body parameters are accepted:
+//   - [group.Name]: required
+//   - [group.Permissions]
 func (c *Client) UpdateGroup(ctx context.Context, id snipeit.GroupID, opts ...group.RequestOption) error {
 	ro := &group.RequestOptions{}
 
@@ -82,7 +98,7 @@ func (c *Client) UpdateGroup(ctx context.Context, id snipeit.GroupID, opts ...gr
 		o(ro)
 	}
 
-	bod, err := ro.Marshal()
+	bod, err := ro.JSON()
 	if err != nil {
 		return err
 	}
@@ -96,6 +112,7 @@ func (c *Client) UpdateGroup(ctx context.Context, id snipeit.GroupID, opts ...gr
 	return c.do(ctx, req, nil)
 }
 
+// DeleteGroup deletes a [snipeit.Group].
 func (c *Client) DeleteGroup(ctx context.Context, id snipeit.GroupID) error {
 	req := request{
 		method: http.MethodDelete,
