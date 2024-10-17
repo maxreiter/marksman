@@ -8,6 +8,8 @@ type AccessoryID ID
 
 type ConsumerID ID
 
+type ConsumableID ID
+
 type UserID ID
 
 const NullUserID = ^UserID(-1)
