@@ -1,0 +1,6 @@
+{{define "method"}}
+{{.Documentation}}
+func (c *Client) {{.Name}}(ctx context.Context, {{join .Signature ", "}}) error {
+	return c.do(ctx, nil, nil, http.MethodDelete, "{{.Endpoint}}", {{join .URLParts ", "}})
+}
+{{end}}

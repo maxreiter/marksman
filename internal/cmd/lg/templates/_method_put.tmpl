@@ -1,0 +1,10 @@
+{{define "method"}}
+{{.Documentation}}
+func (c *Client) {{.Name}}(ctx context.Context, {{join .Signature ", "}}) ({{.ReturnType}}, error) {
+	var payload struct {
+		Payload {{.ReturnType}} `json:"payload"`
+	}
+
+	return payload.Payload, c.do(ctx, {{if .HasOptions}}options{{else}}nil{{end}}, &payload, http.MethodPut, "{{.Endpoint}}", {{join .URLParts ", "}})
+}
+{{end}}

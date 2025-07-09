@@ -1,0 +1,73 @@
+{
+  "package": "marksman",
+  "endpoint": "components",
+  "methods": {
+    "GET": [
+      {},
+      {},
+      {}
+    ],
+    "POST": [
+      {
+        "name": "CreateComponent",
+        "many": false,
+        "signature": ["options *request.CreateComponent"],
+        "return_type": "*snipeit.Component",
+        "has_options": true,
+        "url_parts": [],
+        "documentation": ""
+      },
+      {
+        "name": "CheckOutComponent",
+        "many": false,
+        "signature": ["id int32", "options *request.CheckOutComponent"],
+        "return_type": "*snipeit.Component",
+        "has_options": true,
+        "url_parts": ["id", "\"checkout\""],
+        "documentation": ""
+      },
+      {
+        "name": "CheckInComponent",
+        "many": false,
+        "signature": ["id int32", "options *request.CheckInComponent"],
+        "return_type": "*snipeit.Component",
+        "has_options": true,
+        "url_parts": ["id", "\"checkin\""],
+        "documentation": ""
+      }
+    ],
+    "PATCH": [
+      {
+        "name": "PartiallyUpdateComponent",
+        "many": false,
+        "signature": ["id int32", "options *request.PartiallyUpdateComponent"],
+        "return_type": "*snipeit.Component",
+        "has_options": true,
+        "url_parts": ["id"],
+        "documentation": ""
+      }
+    ],
+    "PUT": [
+      {
+        "name": "UpdateComponent",
+        "many": false,
+        "signature": ["id int32", "options *request.UpdateComponent"],
+        "return_type": "*snipeit.Component",
+        "has_options": true,
+        "url_parts": ["id"],
+        "documentation": ""
+      }
+    ],
+    "DELETE": [
+      {
+        "name": "DeleteComponent",
+        "many": false,
+        "signature": ["id int32"],
+        "return_type": "",
+        "has_options": false,
+        "url_parts": ["id"],
+        "documentation": ""
+      }
+    ]
+  }
+}

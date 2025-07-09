@@ -1,0 +1,14 @@
+{{define "method"}}
+{{.Documentation}}
+func (c *Client) {{.Name}}(ctx context.Context, {{join .Signature ", "}}) ({{.ReturnType}}, error) {
+	{{- if .Many}}
+	var payload struct {
+		Rows {{.ReturnType}} `json:"rows"`
+	}
+	{{- else}}
+	var payload {{.ReturnType}}
+	{{- end}}
+
+	return {{if .Many}}payload.Rows{{else}}payload{{end}}, c.do(ctx, {{if .HasOptions}}options{{else}}nil{{end}}, &payload, http.MethodGet, "{{.Endpoint}}", {{join .URLParts ", "}})
+}
+{{end}}

@@ -1,0 +1,45 @@
+package nullable
+
+import (
+	"bytes"
+	"encoding/json"
+)
+
+{{range $data := .}}
+
+// {{$data.Title}} is a nullable {{$data.Name}} with support for JSON
+// serialization.
+type {{$data.Title}} struct {
+	Value {{$data.Name}}
+	Null bool
+}
+
+// New{{$data.Title}} creates a new nullable {{$data.Name}}.
+func New{{$data.Title}}(value {{$data.Name}}) {{$data.Title}} {
+	return {{$data.Title}}{
+		Value: value,
+		Null: false,
+	}
+}
+
+// MarshalJSON implements the [json.Marshaler] interface.
+func (t {{$data.Title}}) MarshalJSON() ([]byte, error) {
+	if t.Null {
+		return bytes.Clone(null), nil
+	}
+
+	return json.Marshal(t.Value)
+}
+
+// UnmarshalJSON implements the [json.Unmarshaler] interface.
+func (t {{$data.Title}}) UnmarshalJSON(v []byte) error {
+	if bytes.EqualFold(v, null) {
+		t.Null = true
+		return nil
+	}
+
+	t.Null = false
+	return json.Unmarshal(v, &t.Value)
+}
+
+{{end}}

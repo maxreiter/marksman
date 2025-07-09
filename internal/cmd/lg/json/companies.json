@@ -1,0 +1,69 @@
+{
+  "package": "marksman",
+  "endpoint": "companies",
+  "methods": {
+    "GET": [
+      {
+        "name": "FetchCompanies",
+        "many": true,
+        "signature": ["options *request.FetchCompanies"],
+        "return_type": "[]snipeit.Company",
+        "has_options": true,
+        "url_parts": [],
+        "documentation": ""
+      },
+      {
+        "name": "FetchCompany",
+        "many": false,
+        "signature": ["id int32"],
+        "return_type": "*snipeit.Company",
+        "has_options": false,
+        "url_parts": ["id"],
+        "documentation": ""
+      }
+    ],
+    "POST": [
+      {
+        "name": "CreateCompany",
+        "many": false,
+        "signature": ["options *request.CreateCompany"],
+        "return_type": "*snipeit.Company",
+        "has_options": false,
+        "url_parts": [],
+        "documentation": ""
+      }
+    ],
+    "PATCH": [
+      {
+        "name": "PartiallyUpdateCompany",
+        "many": false,
+        "signature": ["id int32", "options *request.PartiallyUpdateCompany"],
+        "return_type": "*snipeit.Company",
+        "has_options": true,
+        "url_parts": ["id"],
+        "documentation": ""
+      }
+    ],
+    "PUT": [
+      {
+        "name": "UpdateCompany",
+        "many": false,
+        "signature": ["id int32", "options *request.UpdateCompany"],
+        "return_type": "*snipeit.Company",
+        "has_options": true,
+        "url_parts": ["id"],
+        "documentation": ""
+      }
+    ],
+    "DELETE": [
+		{
+			"name": "DeleteCompany",
+			"many": false,
+			"signature": ["id int32"],
+			"return_type": "",
+			"has_options": false,
+			"url_parts": ["id"],
+			"docuemntation": ""
+	]
+  }
+}

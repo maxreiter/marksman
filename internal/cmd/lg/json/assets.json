@@ -1,0 +1,142 @@
+{
+  "package": "marksman",
+  "endpoint": "hardware",
+  "methods": {
+    "GET": [
+      {
+        "name": "FetchAssets",
+        "many": true,
+        "signature": ["options *request.FetchAccessories"],
+        "return_type": "[]snipeit.Accessory",
+        "has_options": true,
+        "url_parts": [],
+        "documentation": ""
+      },
+      {
+        "name": "FetchAsset",
+        "many": false,
+        "signature": ["id int32"],
+        "return_type": "*snipeit.Asset",
+        "has_options": false,
+        "url_parts": ["id"],
+        "documentation": ""
+      },
+      {
+        "name": "FetchAssetByTag",
+        "many": false,
+        "signature": ["tag string", "options *request.FetchDeletedAsset"],
+        "return_type": "*snipeit.Asset",
+        "has_options": true,
+        "url_parts": ["\"bytag\"", "tag"],
+        "documentation": ""
+      },
+      {
+        "name": "FetchAssetBySerial",
+        "many": false,
+        "signature": ["serial string", "options *request.FetchDeletedAsset"],
+        "return_type": "*snipeit.Asset",
+        "has_options": true,
+        "url_parts": ["\"byserial\"", "serial"],
+        "documentation": ""
+      },
+      {
+        "name": "FetchDueAssets",
+        "many": true,
+        "signature": [],
+        "return_type": "[]snipeit.Asset",
+        "has_options": false,
+        "url_parts": ["\"audit\"", "\"due\""],
+        "documentation": ""
+      },
+      {
+        "name": "FetchOverdueAssets",
+        "many": true,
+        "signature": [],
+        "return_type": "[]snipeit.Asset",
+        "has_options": false,
+        "url_parts": ["\"audit\"", "\"overdue\""],
+        "documentation": ""
+      },
+      {
+        "name": "FetchAssetLicenses",
+        "many": true,
+        "signature": ["id int32"],
+        "return_type": "[]snipeit.License",
+        "has_options": false,
+        "url_parts": ["id", "\"licenses\""],
+        "documentation": ""
+      }
+    ],
+    "POST": [
+      {
+        "name": "CreateAsset",
+        "many": false,
+        "signature": ["options *request.CreateAsset"],
+        "return_type": "*snipeit.Asset",
+        "has_options": true,
+        "url_parts": [],
+        "documentation": ""
+      },
+      {
+        "name": "CheckOutAsset",
+        "many": false,
+        "signature": ["options *request.CheckOutAsset"],
+        "return_type": "*snipeit.Asset",
+        "has_options": true,
+        "url_parts": ["id", "\"checkout\""],
+        "documentation": ""
+      },
+      {
+        "name": "CheckInAsset",
+        "many": false,
+        "signature": ["options *request.CheckInAsset"],
+        "return_type": "*snipeit.Asset",
+        "has_options": true,
+        "url_parts": ["id", "\"checkin\""],
+        "documentation": ""
+      },
+      {
+        "name": "RestoreAsset",
+        "many": false,
+        "signature": [],
+        "return_type": "*snipeit.Asset",
+        "has_options": false,
+        "url_parts": ["id", "\"restore\""],
+        "documentation": ""
+      }
+    ],
+    "PATCH": [
+      {
+        "name": "PartiallyUpdateAsset",
+        "many": false,
+        "signature": ["id int32", "options *request.PartiallyUpdateAsset"],
+        "return_type": "*snipeit.Asset",
+        "has_options": false,
+        "url_parts": ["id"],
+        "documentation": ""
+      }
+    ],
+    "PUT": [
+      {
+        "name": "UpdateAsset",
+        "many": false,
+        "signature": ["id int32", "options *request.PartiallyUpdateAsset"],
+        "return_type": "*snipeit.Asset",
+        "has_options": false,
+        "url_parts": ["id"],
+        "documentation": ""
+      }
+    ],
+    "DELETE": [
+      {
+        "name": "DeleteAsset",
+        "many": false,
+        "signature": ["id int32"],
+        "return_type": "",
+        "has_options": false,
+        "url_parts": ["id"],
+        "documentation": ""
+      }
+    ]
+  }
+}

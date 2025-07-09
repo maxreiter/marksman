@@ -1,0 +1,71 @@
+[
+	{
+		"resource": "assets",
+		"resource_title": "Assets",
+		"tests": [
+			{
+				"name": "FetchAssets",
+				"method": "GET"
+			},
+			{
+				"name": "FetchAssetByID",
+				"method": "GET"
+			},
+			{
+				"name": "FetchAssetByTag",
+				"method": "GET"
+			},
+			{
+				"name": "FetchAssetBySerial"
+			},
+			{
+				"name": "CreateAsset",
+				"method": "POST"
+			},
+			{
+				"name": "UpdateAsset",
+				"method": "PUT"
+			},
+			{
+				"name": "PartiallyUpdateAsset",
+				"method": "PATCH"
+			},
+			{
+				"name": "DeleteAsset",
+				"method": "DELETE"
+			},
+			{
+				"name": "CheckoutAsset",
+				"method": "POST"
+			},
+			{
+				"name": "CheckinAsset",
+				"method": "POST"
+			},
+			{
+				"name": "AuditAsset",
+				"method": "POST"
+			},
+			{
+				"name": "RestoreAsset",
+				"method": "POST"
+			},
+			{
+				"name": "FetchDueAssets",
+				"method": "GET"
+			},
+			{
+				"name": "FetchOverdueAssets",
+				"method": "GET"
+			},
+			{
+				"name": "FetchAssetLicenses",
+				"method": "GET"
+			},
+			{
+				"name": "CreateAssetLabels",
+				"method": "POST"
+			}
+		]
+	}
+]

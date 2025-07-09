@@ -1,0 +1,97 @@
+{
+  "package": "marksman",
+  "endpoint": "accessories",
+  "methods": {
+    "GET": [
+      {
+        "name": "FetchAccessories",
+        "many": true,
+        "signature": ["options *request.FetchAccessories"],
+        "return_type": "[]snipeit.Accessory",
+        "has_options": true,
+        "url_parts": [],
+        "documentation": ""
+      },
+      {
+        "name": "FetchAccessory",
+        "many": false,
+        "signature": ["id int32"],
+        "return_type": "*snipeit.Accessory",
+        "has_options": false,
+        "url_parts": ["id"],
+        "documentation": ""
+      },
+      {
+        "name": "FetchCheckedOutAccessories",
+        "many": true,
+        "signature": ["id int32", "options *request.FetchCheckedOutAccessories"],
+        "return_type": "[]snipeit.User",
+        "has_options": true,
+        "url_parts": ["id", "\"checkedout\""],
+        "documentation": ""
+      }
+    ],
+    "POST": [
+      {
+        "name": "CreateAccessory",
+        "many": false,
+        "signature": ["options *request.CreateAccessory"],
+        "return_type": "*snipeit.Accessory",
+        "has_options": true,
+        "url_parts": [],
+        "documentation": ""
+      },
+      {
+        "name": "CheckInAccessory",
+        "many": false,
+        "signature": ["id int32"],
+        "return_type": "*snipeit.Accessory",
+        "has_options": false,
+        "url_parts": ["id", "\"checkin\""],
+        "documentation": ""
+      },
+      {
+        "name": "CheckOutAccessory",
+        "many": false,
+        "signature": ["id int32", "options *request.CheckOutAccessory"],
+        "return_type": "*snipeit.Accessory",
+        "has_options": true,
+        "url_parts": ["id", "\"checkout\""],
+        "documentation": ""
+      }
+    ],
+    "PATCH": [
+      {
+        "name": "PartiallyUpdateAccessory",
+        "many": false,
+        "signature": ["id int32", "options *request.PartiallyUpdateAccessory"],
+        "return_type": "*snipeit.Accessory",
+        "has_options": true,
+        "url_parts": ["id"],
+        "documentation": ""
+      }
+    ],
+    "PUT": [
+      {
+        "name": "UpdateAccessory",
+        "many": false,
+        "signature": ["id int32", "options *request.UpdateAccessory"],
+        "return_type": "*snipeit.Accessory",
+        "has_options": true,
+        "url_parts": ["id"],
+        "documentation": ""
+      }
+    ],
+    "DELETE": [
+      {
+        "name": "DeleteAccessory",
+        "many": false,
+        "signature": ["id int32"],
+        "return_type": "",
+        "has_options": false,
+        "url_parts": [],
+        "documentation": ""
+      }
+    ]
+  }
+}

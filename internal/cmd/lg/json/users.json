@@ -1,0 +1,11 @@
+{
+  "package": "marksman",
+  "endpoint": "",
+  "methods": {
+    "GET": [],
+    "POST": [],
+    "PATCH": [],
+    "PUT": [],
+    "DELETE": []
+  }
+}

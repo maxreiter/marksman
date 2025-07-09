@@ -1,0 +1,70 @@
+{
+  "package": "marksman",
+  "endpoint": "categories",
+  "methods": {
+    "GET": [
+      {
+        "name": "FetchCategories",
+        "many": true,
+        "signature": ["options *request.FetchCategories"],
+        "return_type": "[]snipeit.Category",
+        "has_options": true,
+        "url_parts": [],
+        "documentation": ""
+      },
+      {
+        "name": "FetchCategory",
+        "many": false,
+        "signature": ["id int32"],
+        "return_type": "*snipeit.Category",
+        "has_options": false,
+        "url_parts": [],
+        "documentation": ""
+      }
+    ],
+    "POST": [
+      {
+        "name": "CreateCategory",
+        "many": false,
+        "signature": ["options *request.CreateCategory"],
+        "return_type": "*snipeit.Category",
+        "has_options": true,
+        "url_parts": [],
+        "documentation": ""
+      }
+    ],
+    "PATCH": [
+      {
+        "name": "PartiallyUpdateCategory",
+        "many": false,
+        "signature": ["id int32", "options *request.PartiallyUpdateCategory"],
+        "return_type": "*snipeit.Category",
+        "has_options": true,
+        "url_parts": ["id"],
+        "documentation": ""
+      }
+    ],
+    "PUT": [
+      {
+        "name": "UpdateCategory",
+        "many": false,
+        "signature": ["id int32", "options *request.UpdateCategory"],
+        "return_type": "*snipeit.Category",
+        "has_options": true,
+        "url_parts": ["id"],
+        "documentation": ""
+      }
+    ],
+    "DELETE": [
+      {
+        "name": "DeleteCategory",
+        "many": false,
+        "signature": ["id int32"],
+        "return_type": "",
+        "has_options": false,
+        "url_parts": ["id"],
+        "documentation": ""
+      }
+    ]
+  }
+}
